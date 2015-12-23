@@ -1,0 +1,12 @@
+
+def shared_pods
+    pod 'AFNetworking'
+end
+
+
+target 'ZP_Base' do
+    xcodeproj 'ZP_Base.xcodeproj'
+    shared_pods
+end
+
+

@@ -7,7 +7,13 @@
 //
 
 #import "ZP_Base.h"
+#import "AFNetworking/AFNetworking.h"
 
 @implementation ZP_Base
 
+
+-(void)abc
+{
+    AFNetworkReachabilityManager *_abc;
+}
 @end
