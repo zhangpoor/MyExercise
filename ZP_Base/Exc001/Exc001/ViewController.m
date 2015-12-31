@@ -8,11 +8,13 @@
 
 #import "ViewController.h"
 
-#import "ZP_Base.h"
+#import "ZHP_Headers.h"
 
 
 @interface ViewController ()
-
+{
+    ZHPWebView *_webView;
+}
 @end
 
 @implementation ViewController
@@ -20,6 +22,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+
+    _webView = [[ZHPWebView alloc]initWithFrame:self.view.bounds];
+    NSURLRequest *_req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]];
+    [_webView loadRequest:_req];
+    [self.view addSubview:_webView];
+    
+    
 }
 
 
