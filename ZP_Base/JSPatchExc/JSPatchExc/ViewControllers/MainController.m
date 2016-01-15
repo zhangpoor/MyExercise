@@ -125,7 +125,7 @@ typedef void (^ABlock)(id param);
 
 - (void)someAction
 {
-    NSLog(@"%@",[MainController changeStr:@"abc"]);
+    //NSLog(@"%@",[MainController changeStr:@"abc"]);
     
     
 }
