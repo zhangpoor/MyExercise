@@ -16,3 +16,5 @@
 
 #import "NSMutableArray+ZHP.h"
 #import "ZHPWebView.h"
+#import "ZHPHelper.h"
+#import "ZHPHelper+String.h"

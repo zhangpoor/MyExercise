@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DAF296D21A5C9FEE88248669 /* libPods-ZP_Base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A73A7B181D18C556EE8E084F /* libPods-ZP_Base.a */; };
+		E333B3F61C473BE400D6DA80 /* ZHPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E333B3F51C473BE400D6DA80 /* ZHPHelper.m */; };
+		E333B3F91C47428C00D6DA80 /* ZHPHelper+String.m in Sources */ = {isa = PBXBuildFile; fileRef = E333B3F81C47428C00D6DA80 /* ZHPHelper+String.m */; };
 		E3B06EE21C2D3B43002CDE9B /* NSMutableArray+ZHP.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B06EE11C2D3B43002CDE9B /* NSMutableArray+ZHP.m */; };
 		E3B06EE51C32283D002CDE9B /* ZHPWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B06EE41C32283D002CDE9B /* ZHPWebView.m */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,10 @@
 		1B91A4DEF6A7AA0D107CCE4B /* Pods-ZP_Base.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZP_Base.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZP_Base/Pods-ZP_Base.release.xcconfig"; sourceTree = "<group>"; };
 		588C055169FC2B37C6296C94 /* Pods-ZP_Base.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZP_Base.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZP_Base/Pods-ZP_Base.debug.xcconfig"; sourceTree = "<group>"; };
 		A73A7B181D18C556EE8E084F /* libPods-ZP_Base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZP_Base.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E333B3F41C473BE400D6DA80 /* ZHPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHPHelper.h; sourceTree = "<group>"; };
+		E333B3F51C473BE400D6DA80 /* ZHPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHPHelper.m; sourceTree = "<group>"; };
+		E333B3F71C47428C00D6DA80 /* ZHPHelper+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZHPHelper+String.h"; sourceTree = "<group>"; };
+		E333B3F81C47428C00D6DA80 /* ZHPHelper+String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZHPHelper+String.m"; sourceTree = "<group>"; };
 		E3B06EDF1C2D3B00002CDE9B /* ZHP_Headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHP_Headers.h; sourceTree = "<group>"; };
 		E3B06EE01C2D3B43002CDE9B /* NSMutableArray+ZHP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+ZHP.h"; sourceTree = "<group>"; };
 		E3B06EE11C2D3B43002CDE9B /* NSMutableArray+ZHP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+ZHP.m"; sourceTree = "<group>"; };
@@ -91,6 +97,10 @@
 				E3B06EE11C2D3B43002CDE9B /* NSMutableArray+ZHP.m */,
 				E3B06EE31C32283D002CDE9B /* ZHPWebView.h */,
 				E3B06EE41C32283D002CDE9B /* ZHPWebView.m */,
+				E333B3F41C473BE400D6DA80 /* ZHPHelper.h */,
+				E333B3F51C473BE400D6DA80 /* ZHPHelper.m */,
+				E333B3F71C47428C00D6DA80 /* ZHPHelper+String.h */,
+				E333B3F81C47428C00D6DA80 /* ZHPHelper+String.m */,
 			);
 			path = ZP_Base;
 			sourceTree = "<group>";
@@ -187,6 +197,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3B06EE51C32283D002CDE9B /* ZHPWebView.m in Sources */,
+				E333B3F91C47428C00D6DA80 /* ZHPHelper+String.m in Sources */,
+				E333B3F61C473BE400D6DA80 /* ZHPHelper.m in Sources */,
 				E3B06EE21C2D3B43002CDE9B /* NSMutableArray+ZHP.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

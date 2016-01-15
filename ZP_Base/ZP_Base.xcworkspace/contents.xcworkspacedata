@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:JSPatchExc/JSPatchExc.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:XiangQi/XiangQi.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Exc001/Exc001.xcodeproj">
    </FileRef>
    <FileRef
