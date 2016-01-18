@@ -107,6 +107,7 @@ typedef void (^ABlock)(id param);
 #pragma mark - <action>
 - (void)btnAction:(UIButton *)sender
 {
+    /*
     if (sender.tag == 0)
     {
         [[JSPHManager sharedInstance] loadJS:
@@ -121,6 +122,11 @@ typedef void (^ABlock)(id param);
     }
     
     sender.tag = 1 - sender.tag;
+     */
+    
+    [[JSPHManager sharedInstance] loadJS:
+     [[NSBundle mainBundle] pathForResource:@"demo" ofType:@"js"]];
+    [sender setTitle:@"已加载jsph方案01" forState:UIControlStateNormal];
 }
 
 - (void)someAction
@@ -228,8 +234,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
   didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self changeStr:@"aaaa"];
-    /*
+    //[self changeStr:@"aaaa"];
+    
     switch (indexPath.row) {
         case 0:
         {
@@ -259,7 +265,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         default:
             break;
     }
-    */
+    
     
     
 }
