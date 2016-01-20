@@ -26,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		0549A49378280AB81A4F631E /* Pods-JSPatchExc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSPatchExc.release.xcconfig"; path = "../Pods/Target Support Files/Pods-JSPatchExc/Pods-JSPatchExc.release.xcconfig"; sourceTree = "<group>"; };
+		E30F52131C4F6A8600BD6827 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		E333B3EF1C47372700D6DA80 /* JSPHManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSPHManager.h; sourceTree = "<group>"; };
 		E333B3F01C47372700D6DA80 /* JSPHManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSPHManager.m; sourceTree = "<group>"; };
 		E333B3F21C4738AE00D6DA80 /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 				E33E10621C45F90200BE8949 /* Assets.xcassets */,
 				E33E10671C45F90200BE8949 /* Info.plist */,
 				E33E10561C45F90200BE8949 /* Supporting Files */,
+				E30F52131C4F6A8600BD6827 /* PrefixHeader.pch */,
 			);
 			path = JSPatchExc;
 			sourceTree = "<group>";
@@ -332,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -369,7 +371,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -380,8 +382,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED6BF8FDA478E857129705A7 /* Pods-JSPatchExc.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = JSPatchExc/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -390,7 +393,7 @@
 					"\"../ZP_Base\"",
 				);
 				INFOPLIST_FILE = JSPatchExc/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.JSPatchExc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -401,8 +404,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0549A49378280AB81A4F631E /* Pods-JSPatchExc.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = JSPatchExc/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -411,7 +415,7 @@
 					"\"../ZP_Base\"",
 				);
 				INFOPLIST_FILE = JSPatchExc/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.JSPatchExc;
 				PRODUCT_NAME = "$(TARGET_NAME)";

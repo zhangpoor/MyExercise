@@ -50,6 +50,9 @@ typedef void (^ABlock)(id param);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    NSLog(@"size:%@",NSStringFromCGSize(kScreenSize));
+    
     [self initParam];
     [self initUI];
 }
