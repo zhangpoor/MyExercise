@@ -15,4 +15,7 @@
 
 @interface ZHPHelper : NSObject
 
+
++(BOOL)checkIDCard:(NSString *)idStr;
+
 @end
