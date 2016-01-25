@@ -22,13 +22,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-
+    
+    
+    UILabel *_lab = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, kScreenSize.width - 40, 60)];
+    NSString *_str      = @"1234200000023.1237868";
+    NSString *_str02    = @"39734200000023.825065056";
+    [self.view addSubview:_lab];
+    /*
+    CGFloat _f = [_str floatValue];
+    _f += 34;
+     _lab.text = [NSString stringWithFormat:@"%.2f",_f];
+    */
+    
+    
+    NSDecimalNumber *n1 = [NSDecimalNumber decimalNumberWithString:_str];
+    NSDecimalNumber *n2 = [NSDecimalNumber decimalNumberWithString:_str02];
+    
+    NSDecimalNumber *nT =[n1 decimalNumberByAdding:n2];
+    
+    NSLog(@"nT:%@",[nT stringValue]);
+    NSLog(@"aaaa");
+    /*
     id _str = @"310102198411111651";
     
     BOOL _flag = [ZHPHelper checkIDCard:_str];
     
     NSLog(@"aaaaa");
-    /*
+    
     _webView = [[ZHPWebView alloc]initWithFrame:self.view.bounds];
     NSURLRequest *_req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]];
     [_webView loadRequest:_req];
