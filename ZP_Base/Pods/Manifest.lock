@@ -17,13 +17,16 @@ PODS:
   - JSPatch (0.1.5):
     - JSPatch/Core (= 0.1.5)
   - JSPatch/Core (0.1.5)
+  - Masonry (0.6.4)
 
 DEPENDENCIES:
   - AFNetworking
   - JSPatch
+  - Masonry
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   JSPatch: 405b5f5990643e6717dd6715ac60d6a2b582a6ba
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
 
 COCOAPODS: 0.39.0

@@ -19,42 +19,20 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    @try {
-        
-        UILabel *_lab = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, kScreenSize.width - 40, 60)];
-        NSString *_str      = @"1234200000023.1237868";
-        NSString *_str02    = [[NSObject alloc]init];
-        [self.view addSubview:_lab];
-        /*
-         CGFloat _f = [_str floatValue];
-         _f += 34;
-         _lab.text = [NSString stringWithFormat:@"%.2f",_f];
-         */
-        
-        
-        NSDecimalNumber *n1 = [NSDecimalNumber decimalNumberWithString:_str];
-        NSDecimalNumber *n2 = [NSDecimalNumber decimalNumberWithString:_str02];
-        
-        NSDecimalNumber *nT =[n1 decimalNumberByAdding:n2];
-        
-        NSLog(@"nT:%@",[nT stringValue]);
-    }
-    @catch (NSException *exception) {
-        NSLog(@"bbbbb");
-    }
-    @finally {
-        
-    }
+    [self doSomeThing003];
+
+}
+
+- (void)doSomeThing001
+{
+    //id _str = @"310102198411111651";
     
-    NSLog(@"aaaa");
-    /*
-    id _str = @"310102198411111651";
-    
-    BOOL _flag = [ZHPHelper checkIDCard:_str];
+    //BOOL _flag = [ZHPHelper checkIDCard:_str];
     
     NSLog(@"aaaaa");
     
@@ -84,9 +62,57 @@
      }];
     
     NSLog(@"aaaaaaa");
-    */
 }
 
+- (void)doSomeThing002
+{
+    @try {
+        
+        UILabel *_lab = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, kScreenSize.width - 40, 60)];
+        NSString *_str      = @"1234200000023.1237868";
+        NSString *_str02    = (NSString *)[[NSObject alloc]init];
+        [self.view addSubview:_lab];
+        /*
+         CGFloat _f = [_str floatValue];
+         _f += 34;
+         _lab.text = [NSString stringWithFormat:@"%.2f",_f];
+         */
+        
+        
+        NSDecimalNumber *n1 = [NSDecimalNumber decimalNumberWithString:_str];
+        NSDecimalNumber *n2 = [NSDecimalNumber decimalNumberWithString:_str02];
+        
+        NSDecimalNumber *nT =[n1 decimalNumberByAdding:n2];
+        
+        NSLog(@"nT:%@",[nT stringValue]);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"bbbbb");
+    }
+    @finally {
+        
+    }
+    
+    NSLog(@"aaaa");
+}
+
+- (void)doSomeThing003
+{
+    UIView *_v001 = [[UIView alloc]init];
+    _v001.backgroundColor = [UIColor redColor];
+    [self.view addSubview:_v001];
+    
+    [_v001 mas_makeConstraints:
+     ^(MASConstraintMaker *make)
+    {
+        make.center.equalTo(self.view);
+        make.width.equalTo(@100);
+        make.height.equalTo(@200);
+        
+    }];
+    
+    
+}
 
 
 @end

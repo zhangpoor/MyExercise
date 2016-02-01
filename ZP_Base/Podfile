@@ -3,6 +3,7 @@ workspace 'ZP_Base.xcworkspace'
 def shared_pods
     pod 'AFNetworking'
     pod 'JSPatch'
+    pod 'Masonry'
 end
 
 
