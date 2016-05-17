@@ -7,13 +7,35 @@
 //
 
 #import "ViewController.h"
+#import <CoreLocation/CoreLocation.h>
+#import "WebController.h"
+#import "Controller001.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
+#import "LoadingView.h"
 
+#import "RSAManager.h"
+
+/**
+ *  业务操作回调函数
+ *
+ *  @param isSucessed 操作是否成功
+ *  @param oParam     操作的输出参数
+ *  @param eMsg       操作错误信息    （当操作成功时为nil）
+ */
+typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *eMsg);
 
 
 @interface ViewController ()
 {
     ZHPWebView *_webView;
+    UILabel *_lab;
+    
+    UIView *_v;
+    
+    LoadingView *_loadingView;
+    
+    UITextField *_tf;
 }
 @end
 
@@ -24,8 +46,26 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    [self doSomeThing003];
+    self.title = @"Main";
+    /*
+    CLLocation *_cl = [[CLLocation alloc]initWithLatitude:100
+                                                longitude:120];
 
+    NSLog(@"lat:%lf",_cl.coordinate.latitude);
+    NSLog(@"lng:%lf",_cl.coordinate.longitude);
+     */
+    //[self doSomeThing007];
+
+   //CGFloat _h = [self dosomething008];
+NSString *_str =  @"30820122300D06092A864886F70D01010105000382010F003082010A02820101008A2839C3D3A07FE5F1A8D27A0E0988ABF4E069D4C3258DFDBAF0350496FA07986966CB5F2DEA087E698BD2A16638A588102AD69AE51A4468C11038C9B089E6D978492DBDF4D5879808019E583DB4197949B3CDF69C9908DF4CACAE196714B766EA327D4A82C489F35B465EAFC1EE6E88349DD24B4499473406AA4EBDADC65B230863D58D8C7EDFC93B5C3BFCDAD5FB4D0F1B23731A86D571BBA8CD6DDA372C7090541FA1828952E0C1774011DD33A4BA28D7B91A9576DE018896EB655571C276F8884F2B77F9CC6A840037A38A62448E778ACA4F09EE5D33787D7641D4EEA3E55511401C5401BBC4347C2594AF698A93C4F4DC3082D671EA28294229B94A10BF0203010001";
+    
+    NSData *_d = [RSAManager getStrDecodebase64:_str];
+    
+    NSString *_p = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    BOOL _flag = [_d writeToFile:[_p stringByAppendingString:@"/abc"] atomically:NO];
+    
+    NSLog(@"aaaaa");
 }
 
 - (void)doSomeThing001
@@ -111,6 +151,246 @@
         
     }];
     
+    
+}
+
+- (void)doSomeThing004
+{
+    NSString *_filePath = [[NSBundle mainBundle] pathForResource:@"IMG_0004" ofType:@"JPG" inDirectory:@"abc"];
+    
+    
+    UIImage *_img = [UIImage imageWithContentsOfFile:_filePath];
+    
+    NSString *_sandPath = NSHomeDirectory();
+    
+    NSLog(@"aaaa");
+    /*
+    NSString *sandboxPath = NSHomeDirectory();
+    // Once you have the full sandbox path, you can create a path from it，但是不能在sandbox的本文件层上写文件也不能创建目录，而应该是此基础上创建一个新的可写的目录，例如Documents,Library或者temp。
+    NSString *documentPath = [sandboxPath
+                              stringByAppendingPathComponent:@"Documents"];//将Documents添加到sandbox路径上，具体原因前面分析了！
+    
+    
+    
+    
+    NSString *FileName=[documentDirectory stringByAppendingPathComponent:fileName];//fileName就是保存文件的文件名
+    
+    
+    [data writeToFile:FileName atomically:YES];//将NSData类型对象data写入文件，文件名为FileName
+     */
+}
+
+- (void)doSomeThing005
+{
+    UIButton *_btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn.frame = CGRectMake(100, 100, 120, 50);
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+    
+    UIButton *_btn02 = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn02.frame = CGRectMake(100, 300, 120, 50);
+    _btn02.backgroundColor = [UIColor orangeColor];
+    [_btn02 addTarget:self action:@selector(btnAction02) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn02];
+    
+    
+    UIView *_line = [[UIView alloc]initWithFrame:CGRectMake(10, 165, kScreenSize.width, 1)];
+    _line.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:_line];
+    
+    _lab = [[UILabel alloc]initWithFrame:CGRectMake(30, 160, 350, 26)];
+    _lab.backgroundColor = [UIColor orangeColor];
+    _lab.text = @"  中文方式看风景啊鳥失联飞机撒 ";
+    _lab.layer.anchorPoint = CGPointMake(0, 0);
+    _lab.frame = CGRectMake(30, 160, 350, 26);
+    [self.view addSubview:_lab];
+    
+    
+    
+}
+
+int iii = 0;
+-(void)btnAction
+{
+    /*
+    CGRect _rect = _v.frame;
+    _rect.size.height   += 10;
+    _rect.size.width    += 10;
+    
+    _v.frame = _rect;
+    
+    
+    if (iii != 0) {
+        return;
+    }
+    iii++;
+    [self anima:YES];
+    */
+    
+    /*
+    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+    switch (author) {
+        case kCLAuthorizationStatusRestricted:
+        case kCLAuthorizationStatusDenied:
+        {
+            NSLog(@"没有授权");
+        }
+            break;
+        case kCLAuthorizationStatusNotDetermined:
+        {
+        
+        }
+            break;
+        case kCLAuthorizationStatusAuthorized:
+        {
+            
+        }
+            break;
+        default:
+            break;
+    }
+
+    
+    typedef enum {
+        kCLAuthorizationStatusNotDetermined = 0, // 用户尚未做出选择这个应用程序的问候
+        kCLAuthorizationStatusRestricted,        // 此应用程序没有被授权访问的照片数据。可能是家长控制权限
+        kCLAuthorizationStatusDenied,            // 用户已经明确否认了这一照片数据的应用程序访问
+        kCLAuthorizationStatusAuthorized         // 用户已经授权应用访问照片数据} CLAuthorizationStatus;
+    }
+    */
+    /*
+    Controller001 *_web = [[Controller001 alloc]init];
+    _web.title = @"Controller001";
+    [self.navigationController pushViewController:_web animated:YES];
+    
+    
+    WebController *_web = [[WebController alloc]init];
+    _web.title = @"Web";
+    [self.navigationController pushViewController:_web animated:YES];
+    //[self presentViewController:_web animated:YES completion:nil ];
+    
+     */
+}
+
+-(void)btnAction02
+{
+    NSString *_str = _lab.text;
+    
+    _lab.text = [_str stringByAppendingString:@"a"];
+}
+
+-(void)anima:(BOOL)flag
+{
+    __block BOOL _flag = flag;
+    [UIView animateWithDuration:3
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         if (_flag) {
+                             
+
+                             _lab.transform = CGAffineTransformScale(CGAffineTransformMakeTranslation(50, 50), 0.5f, 0.5f);
+
+                         }
+                         else
+                         {
+                             _lab.transform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0, 0), 1.0f, 1.0f);
+                         }
+                                              }
+                     completion:^(BOOL finished) {
+                         [self anima:!_flag];
+                     }];
+}
+
+
+
+- (void)doSomeThing006
+{
+    UIButton *_btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn.frame = CGRectMake(100, 100, 120, 50);
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+    
+    _v = [[UIView alloc]initWithFrame: CGRectMake(100, 300, 120, 50)];
+    _v.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:_v];
+    
+
+    [_v addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"aaaaa");
+}
+
+
+-(void)doSomeThing007
+{
+   
+    
+    self.view.backgroundColor = [UIColor grayColor];
+    
+    UIButton *_btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn.frame = CGRectMake(50, 150, 120, 50);
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(btnAction007) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+    
+    _tf = [[UITextField alloc]initWithFrame:CGRectMake(50, 250, 200, 50)];
+    _tf.backgroundColor = [UIColor whiteColor];
+    _tf.textColor = [UIColor blackColor];
+    _tf.text = @"123";
+    [self.view addSubview:_tf];
+}
+
+-(void)btnAction007
+{
+    NSString *_rStr = @"((^[1-9]{1}[0-9]*)|(^[0]{1}))(([.]{1}[0-9]{1,2}$)|)";
+    NSPredicate *predicatePass = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", _rStr];
+    
+    
+    BOOL isMatch = [predicatePass evaluateWithObject:_tf.text];
+    NSLog(@"%@",isMatch?@"y":@"n");
+    /*
+    Controller001 *_c001 = [[Controller001 alloc]init];
+    
+    [self.navigationController pushViewController:_c001 animated:YES];
+    
+    
+    if (_loadingView) {
+        [_loadingView removeFromSuperview];
+        _loadingView = nil;
+    }
+    */
+}
+
+
+-(CGFloat)dosomething008
+{
+    UILabel *_lab01 = [[UILabel alloc]init];
+    
+    _lab01.frame = CGRectMake(100, 100, 300, 9999999);
+    
+    
+    _lab01.font = [UIFont systemFontOfSize:16];
+    
+    _lab01.backgroundColor = [UIColor yellowColor];
+    
+    _lab01.numberOfLines = 0;
+    
+    _lab01.text = @"aaaadfdsfsdfdsfdsfaaaadfdsfsdfdsfdsfaaaadfdsfsdfdsfdsfaaaadfdsfsdfdsfdsfaaaadfdsfsdfdsfdsfaaaadfdsfsdfdsfdsf";
+    
+    
+    [_lab01 sizeToFit];
+    
+    
+    [self.view addSubview:_lab01];
+    
+    return _lab01.frame.size.height;
     
 }
 

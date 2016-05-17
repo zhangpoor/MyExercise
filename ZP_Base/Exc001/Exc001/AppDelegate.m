@@ -19,9 +19,43 @@
     // Override point for customization after application launch.
     
     
+   
+   
+    /*
+    long double _lf = 98765432167111222.23234324123;
+    
+    NSLog(@"df:%.9Lf",_lf);
+    NSLog(@"f:%.9f",_lf);
+    */
+    /*
+    NSMutableArray *_ary = [NSMutableArray array];
+    
+    [_ary insertObject:@"aaa" atIndex:2];
+    
+    NSLog(@"aaa");
+    
+    NSString *_str = @"aaa";
     
     
+    BOOL _flag = [_str hasPrefix:@"abc"];
     
+    NSLog(@"aaaaa");
+    
+    
+    NSArray *_ary = @[];
+    
+    
+    id _obj = _ary[0];
+    
+    
+    NSMutableDictionary *_dic = [NSMutableDictionary dictionary];
+    
+    [_dic setObject:@"abc" forKey:@"abc"];
+    _dic[@"abc"] = @"aaa";
+    
+    _dic[@"abc"] = nil;
+    _dic[nil] = nil;
+     */
     return YES;
 }
 
