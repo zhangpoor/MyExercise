@@ -20,6 +20,29 @@ end
 target 'JSPatchExc' do
     xcodeproj 'JSPatchExc/JSPatchExc.xcodeproj'
     shared_pods
+    
+target 'TestReactiveNativeAuto' do
+    xcodeproj 'TestReactiveNativeAuto/ios／TestReactiveNativeAuto.xcodeproj'
+    shared_pods
+    
+#pod 'React', :path => 'TestReactiveNative/ReactNative',
+#:subspecs => [
+#'Core',
+#'RCTActionSheet',
+#'RCTAdSupport',
+#'RCTGeolocation',
+#'RCTImage',
+#'RCTNetwork',
+#'RCTPushNotification',
+#'RCTSettings',
+#'RCTText',
+#'RCTVibration',
+#'RCTWebSocket',
+#'RCTLinkingIOS'
+#]
+
+    
+
 end
 
 

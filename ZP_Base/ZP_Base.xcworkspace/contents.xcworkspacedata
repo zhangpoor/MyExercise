@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TestReactiveNativeAuto/ios/TestReactiveNativeAuto.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TestReactiveNative/TestReactiveNative.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftExs/SwiftExs.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:JSPatchExc/JSPatchExc.xcodeproj">
    </FileRef>
    <FileRef

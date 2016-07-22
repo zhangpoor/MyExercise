@@ -19,3 +19,4 @@
 #import "ZHPWebView.h"
 #import "ZHPHelper.h"
 #import "ZHPHelper+String.h"
+#import "ZHPHelper+Device.h"

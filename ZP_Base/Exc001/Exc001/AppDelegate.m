@@ -7,8 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "ZHP_Headers.h"
 
 @interface AppDelegate ()
+{
+    NSHashTable *_WHTalbe;
+}
+
 
 @end
 
@@ -19,8 +24,36 @@
     // Override point for customization after application launch.
     
     
-   
-   
+    
+    NSString *_str = @"\"";
+    
+     [_str UTF8String];
+    
+    //NSDictionary *_dic = @{};
+    
+    
+    //id _abc = _dic[@"abc"];
+    
+    //NSLog(@"aaaa");
+    
+    /*
+    NSDictionary *_dic = nil;
+    
+    
+    NSInteger _num = [_dic[@"abc"] integerValue];
+    
+    
+    NSTimeInterval _a1 = [[NSDate date] timeIntervalSince1970];
+    
+    
+    sleep(5);
+    NSTimeInterval _a2 = [[NSDate date] timeIntervalSince1970];
+    
+    
+    NSTimeInterval _r = _a2 - _a1;
+    */
+    //NSLog(@"aaa");
+    
     /*
     long double _lf = 98765432167111222.23234324123;
     
@@ -56,7 +89,59 @@
     _dic[@"abc"] = nil;
     _dic[nil] = nil;
      */
+    
+    //NSString *_str = [AppDelegate getChannelBizNo:@"aaaaads"];
+    /*
+    NSString *_v = [ZHPHelper appVersion];
+    NSString *_bv = [ZHPHelper buildVersion];
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    
+    
+    _WHTalbe = [NSHashTable weakObjectsHashTable];
+    
+    
+    NSObject *_obj = [[NSObject alloc] init];
+    [_WHTalbe addObject:_obj];
+    
+    _obj = nil;
+    
+    [_WHTalbe removeObject:_obj];
+    
+    */
+    
     return YES;
+}
+
+
++(NSString *)getChannelBizNo:(NSString *)clientNo
+{
+    
+    NSMutableString *sb     = [[NSMutableString alloc]initWithString:@""];
+    
+    
+    //String time = String.valueOf(new Date().getTime());
+    //String randomStr = String.valueOf(Math.abs(new Random().nextLong()));
+    //sb.append(clientNo).append(time).append("0").append(time).append(randomStr);
+    
+    /* 时间戳 和 随机数 的格式还有长度，自己调整下 */
+    long long _timeStamp    =  (long long)([[NSDate date] timeIntervalSince1970] * 1000);
+    NSString *time = [NSString stringWithFormat:@"%lld",_timeStamp];
+    
+    long _randomNumber = mrand48(); //(long)arc4random() ;
+    NSString *randomStr = [NSString stringWithFormat:@"%ld",_randomNumber];
+    
+    [sb appendString:clientNo];
+    [sb appendString:time];
+    [sb appendString:@"0"];
+    [sb appendString:time];
+    [sb appendString:randomStr];
+    
+
+    if (sb.length > 64) {
+        [sb substringToIndex:64];
+    }
+    
+    return sb;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

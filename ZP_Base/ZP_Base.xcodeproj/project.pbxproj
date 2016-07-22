@@ -12,6 +12,7 @@
 		E333B3F91C47428C00D6DA80 /* ZHPHelper+String.m in Sources */ = {isa = PBXBuildFile; fileRef = E333B3F81C47428C00D6DA80 /* ZHPHelper+String.m */; };
 		E3B06EE21C2D3B43002CDE9B /* NSMutableArray+ZHP.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B06EE11C2D3B43002CDE9B /* NSMutableArray+ZHP.m */; };
 		E3B06EE51C32283D002CDE9B /* ZHPWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B06EE41C32283D002CDE9B /* ZHPWebView.m */; };
+		E3EBC5A21D192C9100A6FB55 /* ZHPHelper+Device.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EBC5A11D192C9100A6FB55 /* ZHPHelper+Device.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		E3B06EE31C32283D002CDE9B /* ZHPWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHPWebView.h; sourceTree = "<group>"; };
 		E3B06EE41C32283D002CDE9B /* ZHPWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHPWebView.m; sourceTree = "<group>"; };
 		E3C253E41C2A892E0041530B /* libZP_Base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZP_Base.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3EBC5A01D192C9100A6FB55 /* ZHPHelper+Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZHPHelper+Device.h"; sourceTree = "<group>"; };
+		E3EBC5A11D192C9100A6FB55 /* ZHPHelper+Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZHPHelper+Device.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				E333B3F51C473BE400D6DA80 /* ZHPHelper.m */,
 				E333B3F71C47428C00D6DA80 /* ZHPHelper+String.h */,
 				E333B3F81C47428C00D6DA80 /* ZHPHelper+String.m */,
+				E3EBC5A01D192C9100A6FB55 /* ZHPHelper+Device.h */,
+				E3EBC5A11D192C9100A6FB55 /* ZHPHelper+Device.m */,
 			);
 			path = ZP_Base;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			files = (
 				E3B06EE51C32283D002CDE9B /* ZHPWebView.m in Sources */,
 				E333B3F91C47428C00D6DA80 /* ZHPHelper+String.m in Sources */,
+				E3EBC5A21D192C9100A6FB55 /* ZHPHelper+Device.m in Sources */,
 				E333B3F61C473BE400D6DA80 /* ZHPHelper.m in Sources */,
 				E3B06EE21C2D3B43002CDE9B /* NSMutableArray+ZHP.m in Sources */,
 			);

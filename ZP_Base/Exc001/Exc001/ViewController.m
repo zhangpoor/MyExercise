@@ -15,6 +15,7 @@
 #import "LoadingView.h"
 
 #import "RSAManager.h"
+#import "ControllerE.h"
 
 /**
  *  业务操作回调函数
@@ -37,6 +38,9 @@ typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *
     
     UITextField *_tf;
 }
+
+
+
 @end
 
 @implementation ViewController
@@ -47,25 +51,13 @@ typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Main";
-    /*
-    CLLocation *_cl = [[CLLocation alloc]initWithLatitude:100
-                                                longitude:120];
-
-    NSLog(@"lat:%lf",_cl.coordinate.latitude);
-    NSLog(@"lng:%lf",_cl.coordinate.longitude);
-     */
-    //[self doSomeThing007];
-
-   //CGFloat _h = [self dosomething008];
-NSString *_str =  @"30820122300D06092A864886F70D01010105000382010F003082010A02820101008A2839C3D3A07FE5F1A8D27A0E0988ABF4E069D4C3258DFDBAF0350496FA07986966CB5F2DEA087E698BD2A16638A588102AD69AE51A4468C11038C9B089E6D978492DBDF4D5879808019E583DB4197949B3CDF69C9908DF4CACAE196714B766EA327D4A82C489F35B465EAFC1EE6E88349DD24B4499473406AA4EBDADC65B230863D58D8C7EDFC93B5C3BFCDAD5FB4D0F1B23731A86D571BBA8CD6DDA372C7090541FA1828952E0C1774011DD33A4BA28D7B91A9576DE018896EB655571C276F8884F2B77F9CC6A840037A38A62448E778ACA4F09EE5D33787D7641D4EEA3E55511401C5401BBC4347C2594AF698A93C4F4DC3082D671EA28294229B94A10BF0203010001";
+    //NSArray *_ary;
+    //NSDictionary *_dic;
+    //[_ary indexOfObject:<#(nonnull id)#>]
+    //[_dic ke];
     
-    NSData *_d = [RSAManager getStrDecodebase64:_str];
     
-    NSString *_p = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    
-    BOOL _flag = [_d writeToFile:[_p stringByAppendingString:@"/abc"] atomically:NO];
-    
-    NSLog(@"aaaaa");
+    [self doSomeThing0E5];
 }
 
 - (void)doSomeThing001
@@ -392,6 +384,26 @@ int iii = 0;
     
     return _lab01.frame.size.height;
     
+}
+
+
+- (void)doSomeThing0E5
+{
+    UIButton *_btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn.frame = CGRectMake(100, 100, 120, 50);
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(btnActionE) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+}
+
+- (void)btnActionE
+{
+    
+    ControllerE *_c = [[ControllerE alloc]init];
+    _c.title = @"mC";
+    
+    UINavigationController *_nav = [[UINavigationController alloc]initWithRootViewController:_c];
+    [self presentViewController:_nav animated:YES completion:nil];
 }
 
 

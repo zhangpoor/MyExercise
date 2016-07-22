@@ -1,0 +1,3 @@
+rootProject.name = 'TestReactiveNativeAuto'
+
+include ':app'
