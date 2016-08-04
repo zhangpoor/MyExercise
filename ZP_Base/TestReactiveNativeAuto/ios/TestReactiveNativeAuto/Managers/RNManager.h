@@ -17,7 +17,7 @@
 + (instancetype)sharedInstance;
 
 
-+ (UIView *)createViewWithProperties:(NSDictionary *)info;
++ (UIView *)createViewWithProperties:(NSDictionary *)info moduleName:(NSString *)mName;
 
 
 @end

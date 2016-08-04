@@ -27,7 +27,7 @@
 typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *eMsg);
 
 
-@interface ViewController ()
+@interface ViewController ()<UIWebViewDelegate>
 {
     ZHPWebView *_webView;
     UILabel *_lab;
@@ -37,6 +37,8 @@ typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *
     LoadingView *_loadingView;
     
     UITextField *_tf;
+    
+    UIWebView *_web;
 }
 
 
@@ -57,7 +59,9 @@ typedef void (^BusinessOperationCallback)(BOOL isSucessed,id outParam,NSString *
     //[_dic ke];
     
     
-    [self doSomeThing0E5];
+    //[self doSomeThing0E5];
+    
+    [self do009];
 }
 
 - (void)doSomeThing001
@@ -407,4 +411,40 @@ int iii = 0;
 }
 
 
+- (void)do009
+{
+    _web = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:_web];
+    
+    _web.delegate = self;
+    
+    [_web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com.cn"]]];
+    
+    
+    
+    UIButton *_btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _btn.frame = CGRectMake(100, 100, 120, 50);
+    _btn.backgroundColor = [UIColor orangeColor];
+    [_btn addTarget:self action:@selector(btnActionA) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btn];
+}
+- (void)btnActionA
+{
+    
+    NSMutableString *js = [NSMutableString stringWithString:@""];
+    
+    [js appendString:@"abc++;"];
+    [js appendString:@"alert(abc);"];
+    
+    [_web stringByEvaluatingJavaScriptFromString:js];
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSMutableString *js = [NSMutableString stringWithString:@""];
+    
+    [js appendString:@"var abc = 1;"];
+    [js appendString:@"alert(abc);"];
+    
+    [webView stringByEvaluatingJavaScriptFromString:js];
+}
 @end

@@ -114,6 +114,10 @@ class FirstViewController: UIViewController {
         print("_yz002[abc]:\(_yz002.abc)");
         print("_yz002[abb]:\(_yz002.abb)");
         
+        
+        
+        self.performSelector(<#T##aSelector: Selector##Selector#>)
+        
     }
     
     func dosomething002()

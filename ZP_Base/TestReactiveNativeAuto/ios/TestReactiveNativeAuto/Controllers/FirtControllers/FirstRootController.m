@@ -11,6 +11,8 @@
 
 @interface FirstRootController ()
 
+
+
 @end
 
 @implementation FirstRootController
@@ -23,11 +25,14 @@
   
   [self initUI];
   
+
 }
 
 - (void)initUI
 {
-  self.view = [RNManager createViewWithProperties:@{@"abc":@"aaa"}];
+  self.view = [RNManager createViewWithProperties:nil moduleName:@"TestRedux"];
+  
+
 }
 
 @end

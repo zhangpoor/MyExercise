@@ -40,13 +40,13 @@
   [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"JS_IOS/MainInterface" fallbackResource:nil];
 }
 
-+ (UIView *)createViewWithProperties:(NSDictionary *)info
++ (UIView *)createViewWithProperties:(NSDictionary *)info moduleName:(NSString *)mName
 {
   RCTBridge *_rctBridge= [[RCTBridge alloc] initWithDelegate:[RNManager sharedInstance]
                                                launchOptions:nil];
   
   RCTRootView *rootView = [[RCTRootView alloc]initWithBridge:_rctBridge
-                                                  moduleName:@"mView"
+                                                  moduleName:mName
                                            initialProperties:info];
   
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];

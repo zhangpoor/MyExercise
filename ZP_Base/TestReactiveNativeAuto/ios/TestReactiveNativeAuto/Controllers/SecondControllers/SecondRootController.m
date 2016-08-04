@@ -7,6 +7,7 @@
 //
 
 #import "SecondRootController.h"
+#import "RNManager.h"
 
 @interface SecondRootController ()
 
@@ -19,8 +20,15 @@
     // Do any additional setup after loading the view.
     
     self.title = @"Second Page";
+  
+  
+    [self initUI];
+  
 }
 
-
+- (void)initUI
+{
+    self.view = [RNManager createViewWithProperties:nil moduleName:@"mView"];
+}
 
 @end
