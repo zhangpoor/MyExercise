@@ -92,6 +92,11 @@ class MyView extends Component{
 
         //this.createEnemy();
 
+
+
+
+
+        
     }
 
     info(){
