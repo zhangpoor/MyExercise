@@ -96,7 +96,7 @@ class MyView extends Component{
 
 
 
-        
+
     }
 
     info(){
