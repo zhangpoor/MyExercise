@@ -277,6 +277,7 @@ class MyView extends Component{
  */
     speedBtnAciotn(e){
 
+        adfadfsfasf 
         alert(Object.keys(e));
     }
 
