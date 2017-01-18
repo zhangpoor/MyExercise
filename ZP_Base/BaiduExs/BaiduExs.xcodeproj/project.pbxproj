@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A6F89F3CDE201E462DC4ADF6 /* libPods-BaiduExs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */; };
+		E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */; };
+		E3AC49A91E2E248700AE6CBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49A81E2E248700AE6CBF /* main.m */; };
+		E3AC49AC1E2E248700AE6CBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49AB1E2E248700AE6CBF /* AppDelegate.m */; };
+		E3AC49AF1E2E248700AE6CBF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49AE1E2E248700AE6CBF /* ViewController.m */; };
+		E3AC49B21E2E248700AE6CBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B01E2E248700AE6CBF /* Main.storyboard */; };
+		E3AC49B41E2E248700AE6CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B31E2E248700AE6CBF /* Assets.xcassets */; };
+		E3AC49B71E2E248700AE6CBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B51E2E248700AE6CBF /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaiduExs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.debug.xcconfig"; sourceTree = "<group>"; };
+		BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.release.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.release.xcconfig"; sourceTree = "<group>"; };
+		E39365931E2E2AB700F37B46 /* YZTBaiduMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTBaiduMapHelper.h; sourceTree = "<group>"; };
+		E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YZTBaiduMapHelper.mm; sourceTree = "<group>"; };
+		E3AC49A41E2E248700AE6CBF /* BaiduExs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaiduExs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3AC49A81E2E248700AE6CBF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3AC49AA1E2E248700AE6CBF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E3AC49AB1E2E248700AE6CBF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E3AC49AD1E2E248700AE6CBF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E3AC49AE1E2E248700AE6CBF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E3AC49B11E2E248700AE6CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E3AC49B31E2E248700AE6CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3AC49B61E2E248700AE6CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E3AC49B81E2E248700AE6CBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3AC49A11E2E248700AE6CBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6F89F3CDE201E462DC4ADF6 /* libPods-BaiduExs.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70BC91A64E8F73C2A6A4E47D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */,
+				BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AF801E754A73832C039E1EF6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E39365921E2E2AB700F37B46 /* Baidu */ = {
+			isa = PBXGroup;
+			children = (
+				E39365931E2E2AB700F37B46 /* YZTBaiduMapHelper.h */,
+				E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */,
+			);
+			path = Baidu;
+			sourceTree = "<group>";
+		};
+		E3AC499B1E2E248700AE6CBF = {
+			isa = PBXGroup;
+			children = (
+				E3AC49A61E2E248700AE6CBF /* BaiduExs */,
+				E3AC49A51E2E248700AE6CBF /* Products */,
+				70BC91A64E8F73C2A6A4E47D /* Pods */,
+				AF801E754A73832C039E1EF6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E3AC49A51E2E248700AE6CBF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3AC49A41E2E248700AE6CBF /* BaiduExs.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3AC49A61E2E248700AE6CBF /* BaiduExs */ = {
+			isa = PBXGroup;
+			children = (
+				E39365921E2E2AB700F37B46 /* Baidu */,
+				E3AC49AA1E2E248700AE6CBF /* AppDelegate.h */,
+				E3AC49AB1E2E248700AE6CBF /* AppDelegate.m */,
+				E3AC49AD1E2E248700AE6CBF /* ViewController.h */,
+				E3AC49AE1E2E248700AE6CBF /* ViewController.m */,
+				E3AC49B01E2E248700AE6CBF /* Main.storyboard */,
+				E3AC49B31E2E248700AE6CBF /* Assets.xcassets */,
+				E3AC49B51E2E248700AE6CBF /* LaunchScreen.storyboard */,
+				E3AC49B81E2E248700AE6CBF /* Info.plist */,
+				E3AC49A71E2E248700AE6CBF /* Supporting Files */,
+			);
+			path = BaiduExs;
+			sourceTree = "<group>";
+		};
+		E3AC49A71E2E248700AE6CBF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E3AC49A81E2E248700AE6CBF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3AC49A31E2E248700AE6CBF /* BaiduExs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3AC49BB1E2E248700AE6CBF /* Build configuration list for PBXNativeTarget "BaiduExs" */;
+			buildPhases = (
+				156F2F0CC1716C57E09C32B4 /* [CP] Check Pods Manifest.lock */,
+				E3AC49A01E2E248700AE6CBF /* Sources */,
+				E3AC49A11E2E248700AE6CBF /* Frameworks */,
+				E3AC49A21E2E248700AE6CBF /* Resources */,
+				5524D1A3675B29D92D7F0130 /* [CP] Embed Pods Frameworks */,
+				864EBBE31E88D3EBAF3FD8E7 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BaiduExs;
+			productName = BaiduExs;
+			productReference = E3AC49A41E2E248700AE6CBF /* BaiduExs.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3AC499C1E2E248700AE6CBF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = zhangpoor;
+				TargetAttributes = {
+					E3AC49A31E2E248700AE6CBF = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = MY2CY9936K;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = E3AC499F1E2E248700AE6CBF /* Build configuration list for PBXProject "BaiduExs" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E3AC499B1E2E248700AE6CBF;
+			productRefGroup = E3AC49A51E2E248700AE6CBF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3AC49A31E2E248700AE6CBF /* BaiduExs */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3AC49A21E2E248700AE6CBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3AC49B71E2E248700AE6CBF /* LaunchScreen.storyboard in Resources */,
+				E3AC49B41E2E248700AE6CBF /* Assets.xcassets in Resources */,
+				E3AC49B21E2E248700AE6CBF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		156F2F0CC1716C57E09C32B4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5524D1A3675B29D92D7F0130 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		864EBBE31E88D3EBAF3FD8E7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3AC49A01E2E248700AE6CBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3AC49AF1E2E248700AE6CBF /* ViewController.m in Sources */,
+				E3AC49AC1E2E248700AE6CBF /* AppDelegate.m in Sources */,
+				E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */,
+				E3AC49A91E2E248700AE6CBF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E3AC49B01E2E248700AE6CBF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3AC49B11E2E248700AE6CBF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E3AC49B51E2E248700AE6CBF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3AC49B61E2E248700AE6CBF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3AC49B91E2E248700AE6CBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E3AC49BA1E2E248700AE6CBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3AC49BC1E2E248700AE6CBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 诚亮 张 (W6G2PYPGQ2)";
+				DEVELOPMENT_TEAM = MY2CY9936K;
+				INFOPLIST_FILE = BaiduExs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.BaiduExs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
+				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		E3AC49BD1E2E248700AE6CBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 诚亮 张 (W6G2PYPGQ2)";
+				DEVELOPMENT_TEAM = MY2CY9936K;
+				INFOPLIST_FILE = BaiduExs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.BaiduExs;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
+				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3AC499F1E2E248700AE6CBF /* Build configuration list for PBXProject "BaiduExs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3AC49B91E2E248700AE6CBF /* Debug */,
+				E3AC49BA1E2E248700AE6CBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3AC49BB1E2E248700AE6CBF /* Build configuration list for PBXNativeTarget "BaiduExs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3AC49BC1E2E248700AE6CBF /* Debug */,
+				E3AC49BD1E2E248700AE6CBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3AC499C1E2E248700AE6CBF /* Project object */;
+}

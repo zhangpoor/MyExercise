@@ -3,11 +3,9 @@
  */
 import React, { Component, PropTypes } from 'react';
 import {
-Animated,
     StyleSheet,
     View,
     Text,
-    TouchableHighlight
 } from 'react-native';
 
 import UIFactory from './UIFactory'
@@ -15,24 +13,24 @@ import Item from './Game001/Item'
 
 
 
-let _cannonWidth        = 40;
-let _cannonHeight       = 60;
-let _cannonBgColor      = 'orange';
-let _cannonBasicSpeed   = 0.7;
+let _cannonWidth = 40;
+let _cannonHeight = 60;
+let _cannonBgColor = 'orange';
+let _cannonBasicSpeed = 0.7;
 
 
 
-let _enemyWidth         = 34;
-let _enemyHeight        = _enemyWidth;
-let _enemyBgColor       = 'red';
-let _enemySpeed         = 1.1;
-let _countOfEnemyPath   = 8;
+let _enemyWidth = 34;
+let _enemyHeight = _enemyWidth;
+let _enemyBgColor = 'red';
+let _enemySpeed = 1.1;
+let _countOfEnemyPath = 8;
 
-let _pageHeight         = UIFactory.winHeight - UIFactory.navHeight - UIFactory.tabBarHeight;
+let _pageHeight = UIFactory.winHeight - UIFactory.navHeight - UIFactory.tabBarHeight;
 
 
 
-function getGap(){
+function getGap() {
 
     let _a = UIFactory.winWidth - _enemyWidth * _countOfEnemyPath;
     let _c = _a / 10;
@@ -40,52 +38,52 @@ function getGap(){
     return _c;
 }
 
-let _gap            = getGap();
-let _roomSpace      = _gap + _enemyWidth;
-let _fireTime       = 20;
-let _enemyTimeCount = 800 / _fireTime ;
+let _gap = getGap();
+let _roomSpace = _gap + _enemyWidth;
+let _fireTime = 20;
+let _enemyTimeCount = 800 / _fireTime;
 
-class MyView extends Component{
+class MyView extends Component {
 
-    constructor()
-    {
+    componentWillUnmount() {
+
+
+    }
+
+    constructor() {
         super();
 
-        this.state      = {
-            enemyViews:     PropTypes.array
+        this.state = {
+            enemyViews: PropTypes.array
         };
 
-        this.timeCount          = 0;
-        this.timer              = null;
+        this.timeCount = 0;
+        this.timer = null;
 
-        this.enemys             = [];
-        this.state.enemyViews   = [];
-        this.enemyCount         = this.enemys.length;
-        this.lastPathNo         = 0;
-        this.cannon             = this.createCannon();
-        this.cannonSpeed        = 0;
+        this.enemys = [];
+        this.state.enemyViews = [];
+        this.enemyCount = this.enemys.length;
+        this.lastPathNo = 0;
+        this.cannon = this.createCannon();
+        this.cannonSpeed = 0;
 
 
-        this.btnAdd             = UIFactory.createBtn(
-            {backgroundColor:'yellow',width:70,height:30,left:210,top:5},
+        this.btnAdd = UIFactory.createBtn({ backgroundColor: 'yellow', width: 70, height: 30, left: 210, top: 5 },
             'red',
             //this.addEnemy.bind(this)
             this.startTimer.bind(this)
         );
-        this.btnMove            = UIFactory.createBtn(
-            {backgroundColor:'blue',width:70,height:30,left:285,top:5},
+        this.btnMove = UIFactory.createBtn({ backgroundColor: 'blue', width: 70, height: 30, left: 285, top: 5 },
             'red',
             this.stopTimer.bind(this)
         );
 
-        this.btnLeft            = UIFactory.createBtn(
-            {backgroundColor:'yellow',width:60,height:40,left:0,top:_pageHeight - 40},
+        this.btnLeft = UIFactory.createBtn({ backgroundColor: 'yellow', width: 60, height: 40, left: 0, top: _pageHeight - 40 },
             'red',
 
             this.speedBtnAciotn.bind(this)
         );
-        this.btnRight           = UIFactory.createBtn(
-            {backgroundColor:'blue',width:60,height:40,left:UIFactory.winWidth - 60,top:_pageHeight - 40},
+        this.btnRight = UIFactory.createBtn({ backgroundColor: 'blue', width: 60, height: 40, left: UIFactory.winWidth - 60, top: _pageHeight - 40 },
             'red',
             this.speedBtnAciotn.bind(this)
         );
@@ -99,8 +97,8 @@ class MyView extends Component{
 
     }
 
-    info(){
-        return ('现在敌人数量:'+this.enemyCount+'\n'+'当前屏幕宽度:'+UIFactory.winWidth);
+    info() {
+        return ('现在敌人数量:' + this.enemyCount + '\n' + '当前屏幕宽度:' + UIFactory.winWidth);
     }
 
 
@@ -109,19 +107,8 @@ class MyView extends Component{
         //      'cannonView:'+this.cannon.getItemView());
         return (
 
-            <View style={MyViewStyle.RootPageStyle}>
-                {this.cannon.getItemView()}
-                {this.state.enemyViews}
-                <View style={MyViewStyle.InfoBarStyle}>
-                    <Text style={MyViewStyle.InfoStyle}>
-                        {this.info()}
-                    </Text>
-                    {this.btnAdd}
-                    {this.btnMove}
-                </View>
-                {this.btnLeft}
-                {this.btnRight}
-            </View>
+            < View style = { MyViewStyle.RootPageStyle } > { this.cannon.getItemView() } { this.state.enemyViews } < View style = { MyViewStyle.InfoBarStyle } >
+            < Text style = { MyViewStyle.InfoStyle } > { this.info() } < /Text> { this.btnAdd } { this.btnMove } < /View > { this.btnLeft } { this.btnRight } < /View>
 
         );
     }
@@ -131,9 +118,9 @@ class MyView extends Component{
      *  Timer
      *
      */
-    startTimer(){
+    startTimer() {
 
-        if(this.timer == null){
+        if (this.timer == null) {
 
             this.timer = setInterval(
                 () => this.timeFire(),
@@ -143,14 +130,14 @@ class MyView extends Component{
 
     }
 
-    stopTimer(){
+    stopTimer() {
 
         this.timer && clearInterval(this.timer);
 
         this.timer = null;
     }
 
-    timeFire(){
+    timeFire() {
         /// do bussiness
         this.enemyBussiness();
 
@@ -162,39 +149,38 @@ class MyView extends Component{
         this.setState(this.state);
     }
 
-/*
- *  EnemyBlock
- *
- */
-    enemyBussiness(){
+    /*
+     *  EnemyBlock
+     *
+     */
+    enemyBussiness() {
 
 
         this.timeCount++;
-        if(this.timeCount >= _enemyTimeCount)
-        {
+        if (this.timeCount >= _enemyTimeCount) {
             this.addEnemy();
             this.timeCount = 0;
         }
 
     }
 
-    enemyXY(itemId){
+    enemyXY(itemId) {
 
 
-        return({
+        return ({
 
-            top:    40,
-            left:   _gap + itemId * _roomSpace
+            top: 40,
+            left: _gap + itemId * _roomSpace
         });
 
     }
 
-    createEnemy(){
+    createEnemy() {
 
-        let _pathNo     = Math.ceil(_countOfEnemyPath * Math.random()) - 1;
+        let _pathNo = Math.ceil(_countOfEnemyPath * Math.random()) - 1;
 
-        var _pathFinal  = _pathNo;
-        if(this.lastPathNo == _pathFinal){
+        var _pathFinal = _pathNo;
+        if (this.lastPathNo == _pathFinal) {
             //如果是奇数,中间那个可能会重复
             _pathFinal = _countOfEnemyPath - 1 - _pathFinal;
         }
@@ -213,7 +199,7 @@ class MyView extends Component{
 
     }
 
-    addEnemy(){
+    addEnemy() {
 
         this.createEnemy();
         //this.setState(this.state);
@@ -224,32 +210,31 @@ class MyView extends Component{
         this.state.enemyViews = [];
         var _es = this.enemys;
         this.enemys = [];
-        for(var i = 0 ; i < this.enemyCount ;i++){
+        for (var i = 0; i < this.enemyCount; i++) {
             var _e = _es[i];
             var _v = _e.moveY(_enemySpeed);
 
-            if(_e.state.mTop < _pageHeight){
+            if (_e.state.mTop < _pageHeight) {
                 this.enemys.push(_e);
                 this.state.enemyViews.push(_v);
 
             }
         }
 
-        this.enemyCount         = this.enemys.length;
+        this.enemyCount = this.enemys.length;
 
         //this.setState(this.state);
     }
 
-/*
- *  Cannon
- *
- */
-    createCannon(){
+    /*
+     *  Cannon
+     *
+     */
+    createCannon() {
         var _c = new Item(
-            MyViewStyle.CannonBasicStyle,
-            {
-                left:(UIFactory.winWidth - _cannonWidth)/2.0,
-                top:_pageHeight - _cannonHeight - 10,
+            MyViewStyle.CannonBasicStyle, {
+                left: (UIFactory.winWidth - _cannonWidth) / 2.0,
+                top: _pageHeight - _cannonHeight - 10,
 
             }
         );
@@ -259,28 +244,26 @@ class MyView extends Component{
     }
 
     moveCannon() {
-        let _rxBoundle =  UIFactory.winWidth - this.cannon.mWidth;
-        let _lxBoundle =  0;
+        let _rxBoundle = UIFactory.winWidth - this.cannon.mWidth;
+        let _lxBoundle = 0;
 
 
         this.cannon.moveX(this.cannonSpeed);
-        if(this.cannon.state.mLeft > _rxBoundle)
-        {
+        if (this.cannon.state.mLeft > _rxBoundle) {
             this.cannon.state.mLeft = _rxBoundle;
             this.cannonSpeed = 0;
         }
-        if(this.cannon.state.mLeft < 0)
-        {
+        if (this.cannon.state.mLeft < 0) {
             this.cannon.state.mLeft = 0;
             this.cannonSpeed = 0;
         }
         //this.setState(this.state);
     }
 
-/*
- *  SpeedButtonAction
- */
-    speedBtnAciotn(e){
+    /*
+     *  SpeedButtonAction
+     */
+    speedBtnAciotn(e) {
 
         qqqq
         alert(Object.keys(e));
@@ -292,44 +275,43 @@ class MyView extends Component{
 
 
 const MyViewStyle = StyleSheet.create({
-    RootPageStyle:
-    {
-        position:'absolute',
+    RootPageStyle: {
+        position: 'absolute',
         width: UIFactory.winWidth,
-        height:_pageHeight,
+        height: _pageHeight,
         top: UIFactory.navHeight,
         backgroundColor: 'gray'
     },
-    InfoStyle:{
-        position:'absolute',
+    InfoStyle: {
+        position: 'absolute',
         width: 200,
-        height:35,
+        height: 35,
         top: 0,
-        left:0,
+        left: 0,
         backgroundColor: 'black',
-        color:'white',
-        fontSize:10
+        color: 'white',
+        fontSize: 10
     },
-    InfoBarStyle:{
-        position:'absolute',
+    InfoBarStyle: {
+        position: 'absolute',
         width: UIFactory.winWidth,
-        height:35,
+        height: 35,
         top: 0,
-        left:0,
+        left: 0,
         backgroundColor: '#218141'
     },
-    EnemyBasicStyle:{
-        position:'absolute',
+    EnemyBasicStyle: {
+        position: 'absolute',
         width: _enemyWidth,
-        height:_enemyHeight,
+        height: _enemyHeight,
         backgroundColor: _enemyBgColor,
-        borderRadius:_enemyWidth/2.0
+        borderRadius: _enemyWidth / 2.0
 
     },
-    CannonBasicStyle:{
-        position:'absolute',
+    CannonBasicStyle: {
+        position: 'absolute',
         width: _cannonWidth,
-        height:_cannonHeight,
+        height: _cannonHeight,
         backgroundColor: _cannonBgColor
 
     },
@@ -436,4 +418,3 @@ export default MyView;
  },
 
  */
-

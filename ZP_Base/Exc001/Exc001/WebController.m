@@ -97,7 +97,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 }
 - (void)webView:(UIWebView *)webView
-didFailLoadWithError:(nullable NSError *)error
+didFailLoadWithError:(NSError *)error
 {
     NSLog(@"description:\n%@",error.description);
     NSLog(@"\r\n\r\n");

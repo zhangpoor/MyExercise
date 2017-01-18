@@ -50,7 +50,7 @@
     NSLog(@"\r\nwebViewDidFinishLoad:\r\n");
 }
 - (void)webView:(UIWebView *)webView
-didFailLoadWithError:(nullable NSError *)error
+didFailLoadWithError:(NSError *)error
 {
     NSLog(@"\r\ndidFailLoadWithError:\r\n%@\r\n",error.description);
 }

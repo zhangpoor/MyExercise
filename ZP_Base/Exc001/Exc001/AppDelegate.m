@@ -23,11 +23,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+
     
+    NSMutableDictionary *_dic = [NSMutableDictionary dictionary];
     
-    NSString *_str = @"\"";
+    [_dic removeObjectForKey:@"abc"];
     
-     [_str UTF8String];
+    NSLog(@"aaa");
+//    NSString *_str = @"\"";
+//    
+//     [_str UTF8String];
     
     //NSDictionary *_dic = @{};
     

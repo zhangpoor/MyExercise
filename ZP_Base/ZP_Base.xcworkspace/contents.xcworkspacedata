@@ -2,6 +2,24 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:BaiduExs/BaiduExs.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:funcCoding/funcCoding.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:mask_animation/mask_animation.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:F001/F001.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SF001/SF001.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:TestReactiveNativeAuto/ios/TestReactiveNativeAuto.xcodeproj">
    </FileRef>
    <FileRef
@@ -21,8 +39,5 @@
    </FileRef>
    <FileRef
       location = "group:ZP_Base.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
