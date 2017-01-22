@@ -1,18 +1,13 @@
 //
-//  ViewController.h
+//  LocController.h
 //  BaiduExs
 //
-//  Created by zhangpoor on 17/1/17.
+//  Created by zhangpoor on 17/1/20.
 //  Copyright © 2017年 zhangpoor. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
-
-
-
+@interface LocController : UIViewController
 
 @end
-

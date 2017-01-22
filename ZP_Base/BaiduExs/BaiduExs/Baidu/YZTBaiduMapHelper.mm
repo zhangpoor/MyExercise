@@ -7,10 +7,15 @@
 //
 
 #import "YZTBaiduMapHelper.h"
-#import <MapKit/MapKit.h>
+
+//目前定位全部功能依赖
+#import <BaiduMapKit/BaiduMapAPI_Location/BMKLocationComponent.h>
+//目前反地理编码、 Poi功能（周边查询） 等全部功能依赖
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
 
 
 
+//根据不同的bundle id 去 百度开放平台去注册个。。这个对应的是 com.pingan.yztDept
 static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww";
 
 
@@ -21,14 +26,36 @@ static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww
 
 @implementation YZTBaiduLocModel
 
-- (void)setUserLocation:(BMKUserLocation *)ul
-{
-    _baiduUserLocation = ul;
-}
+
+@end
+
+
+
+
+@interface YZTBaiduGeoModel()
+
+@property (nonatomic,strong)BMKReverseGeoCodeOption *rGeoOption;
+@property (nonatomic,copy)YZTBaiduGeoCodeCallback aCallback;
+
+
++(YZTBaiduGeoModel *)createGeoTaskObj:(BMKReverseGeoCodeOption *)opt callback:(YZTBaiduGeoCodeCallback)callback;
+
 @end
 
 
 @implementation YZTBaiduGeoModel
+
+
++(YZTBaiduGeoModel *)createGeoTaskObj:(BMKReverseGeoCodeOption *)opt
+                             callback:(YZTBaiduGeoCodeCallback)callback
+{
+    YZTBaiduGeoModel *geoObj    = [[YZTBaiduGeoModel alloc]init];
+    geoObj.rGeoOption           = opt;
+    geoObj.aCallback            = callback;
+    
+    return geoObj;
+}
+
 
 @end
 
@@ -67,18 +94,21 @@ static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww
 
 
 @interface YZTBaiduMapHelper ()
-<BMKGeneralDelegate,
-BMKPoiSearchDelegate,
-BMKRouteSearchDelegate,
+<
+BMKGeneralDelegate,
 BMKLocationServiceDelegate,
-BMKGeoCodeSearchDelegate>
+BMKGeoCodeSearchDelegate,
+BMKPoiSearchDelegate
+//BMKRouteSearchDelegate,
+>
 
 
 @property (nonatomic, strong) BMKMapManager *mapManager;
 @property (nonatomic, strong) BMKLocationService *locationService;
+@property (nonatomic, strong) BMKGeoCodeSearch *geoCodeSearch;
 
 
-@property (nonatomic, strong) BMKRouteSearch *routeSearch;
+//@property (nonatomic, strong) BMKRouteSearch *routeSearch;
 
 
 
@@ -87,8 +117,9 @@ BMKGeoCodeSearchDelegate>
 
 @property (nonatomic,strong)NSMutableArray *locateQueue;
 
-@property (nonatomic,strong)NSMutableDictionary *geoQueue;
-@property (nonatomic,strong)NSMutableDictionary *geoMap;
+@property (nonatomic,strong)NSMutableArray *geoQueue;
+@property (nonatomic) BOOL isOnGeo;
+
 
 @property (nonatomic,strong)NSMutableDictionary *nearbyQueue;
 @property (nonatomic,strong)NSMutableDictionary *nearbyMap;
@@ -112,13 +143,14 @@ BMKGeoCodeSearchDelegate>
         
         baiduMapHelper.authorizeQueue   = [NSMutableArray array];
         baiduMapHelper.locateQueue      = [NSMutableArray array];
-        baiduMapHelper.geoQueue         = [NSMutableDictionary dictionary];
-        baiduMapHelper.geoMap           = [NSMutableDictionary dictionary];
+        baiduMapHelper.geoQueue         = [NSMutableArray array];
+
         baiduMapHelper.nearbyQueue      = [NSMutableDictionary dictionary];
         baiduMapHelper.nearbyMap        = [NSMutableDictionary dictionary];
         baiduMapHelper.routeQueue       = [NSMutableDictionary dictionary];
         baiduMapHelper.routeMap         = [NSMutableDictionary dictionary];
         baiduMapHelper.isPermission     = NO;
+        baiduMapHelper.isOnGeo          = NO;
     });
     return baiduMapHelper;
 }
@@ -127,6 +159,9 @@ BMKGeoCodeSearchDelegate>
 #pragma mark- <授权模块>
 - (void)yztBaiduAuthorize:(YZTBaiduAuthorizeCallback)callback
 {
+    BOOL _isLoc = [self yztCheckLocationService];
+    
+
     if (self.isPermission) {
         if (callback) {
             callback(YES,nil);
@@ -228,7 +263,7 @@ BMKGeoCodeSearchDelegate>
             [_weakSelf locateResultAction:NO
                                     param:nil
                                      info:@"请在[系统设置]中打开定位开关"];
-             NSLog(@"zt_baidu_百度地图yztBaiduLocate定位失败: %@",errorStr);
+             NSLog(@"yzt_baidu_百度地图yztBaiduLocate定位失败: %@",errorStr);
              
 
         }
@@ -251,9 +286,6 @@ BMKGeoCodeSearchDelegate>
         if (_callback) {
             _callback(isSuccess,param,info);
         }
-        
-        
-        
     }
 }
 
@@ -261,7 +293,7 @@ BMKGeoCodeSearchDelegate>
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
 
-    NSLog(@"zt_baidu_百度地图定位失败: %@",error);
+    NSLog(@"yzt_baidu_百度地图定位失败: %@",error);
     [self locateResultAction:NO
                        param:nil
                         info:@"请在[系统设置]中打开定位开关"];
@@ -270,11 +302,10 @@ BMKGeoCodeSearchDelegate>
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
     
-    NSLog(@"zt_baidu_百度地图定位成功: %@",userLocation);
+    NSLog(@"yzt_baidu_百度地图定位成功: %@",userLocation);
     
     YZTBaiduLocModel *param   = [[YZTBaiduLocModel alloc]init];
     param.location              = userLocation.location;
-    [param setUserLocation:userLocation];
     
     [self locateResultAction:YES
                        param:param
@@ -304,69 +335,62 @@ BMKGeoCodeSearchDelegate>
 - (void)yztBadiduReverseGeoCodeWithPoint:(CLLocationCoordinate2D)coordinate
                                 callback:(YZTBaiduGeoCodeCallback)callback
 {
+    BMKReverseGeoCodeOption *option = [[BMKReverseGeoCodeOption alloc] init];
+    option.reverseGeoPoint          = coordinate;
     
-     __weak typeof(self) _weakSelf = self;
+    [self.geoQueue addObject:[YZTBaiduGeoModel createGeoTaskObj:option callback:callback]];
+    
+    if (!self.isOnGeo) {
+        [self yztBadiduReverseGeoCodeWithOption:option
+                                       callback:callback];
+    }
+
+}
+
+
+- (void)yztBadiduReverseGeoCodeWithOption:(BMKReverseGeoCodeOption *)option
+                                 callback:(YZTBaiduGeoCodeCallback)callback
+{
+    self.isOnGeo = YES;
+    
+    __weak typeof(self) _weakSelf = self;
     
     [self yztBaiduAuthorize:^(BOOL isSuccess, NSString *errorStr) {
         if (isSuccess) {
-            BMKReverseGeoCodeOption *option = [[BMKReverseGeoCodeOption alloc] init];
-            option.reverseGeoPoint = coordinate;
-            
-            BMKGeoCodeSearch *geoCodeSearch = [[BMKGeoCodeSearch alloc]init];
-            geoCodeSearch.delegate = _weakSelf;
-            
-            if (callback) {
-                
-                NSNumber *_key = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
-                
-                
-                [_weakSelf.geoQueue setObject:callback forKey:_key];
-                [_weakSelf.geoMap setObject:geoCodeSearch forKey:_key];
-                
-            }
-            
-            BOOL flag = [geoCodeSearch reverseGeoCode:option];
+
+            self.geoCodeSearch.delegate = _weakSelf;
+            BOOL flag = [self.geoCodeSearch reverseGeoCode:option];
             if (!flag) {
                 [_weakSelf geoResultAction:NO
-                                  searcher:geoCodeSearch
                                     result:nil
                                  errorInfo:@"反地理编码操作失败"];
             }
             
-            geoCodeSearch = nil;
+            
         }
         else
         {
             
-            NSString *_eMsg =[NSString stringWithFormat:@"反地理编码失败: %@",errorStr];
-            NSLog(@"baidu_ReverseGeo_%@",_eMsg);
-            
-            if (callback) {
-                callback(NO,nil,_eMsg);
-            }
-            
-            
+            NSString *_eMsg = @"反地理编码失败";
+            NSLog(@"yzt_baidu_ReverseGeo_%@",_eMsg);
 
+            [_weakSelf geoResultAction:NO
+                                result:nil
+                             errorInfo:_eMsg];
+            
         }
     }];
 }
 
 -(void)geoResultAction:(BOOL)isSuccess
-              searcher:(BMKGeoCodeSearch *)searcher
                 result:(BMKReverseGeoCodeResult *)result
              errorInfo:(NSString *)info
 {
-    id _key = nil;
-    
-    for (NSNumber *key in self.geoMap.allKeys) {
-        if ([searcher isEqual:self.geoMap[key]]) {
-            _key = key;
-            break;
-        }
-    }
-    
-    if (_key) {
-        YZTBaiduGeoCodeCallback _callback = self.geoQueue[_key];
+    self.geoCodeSearch.delegate = nil;
+
+    if (self.geoQueue.count > 0) {
+        YZTBaiduGeoModel *_geoModel = self.geoQueue[0];
+        YZTBaiduGeoCodeCallback _callback = _geoModel.aCallback;
         
         
         if (_callback) {
@@ -378,28 +402,40 @@ BMKGeoCodeSearchDelegate>
                 param.district  = result.addressDetail.district;
                 param.province  = result.addressDetail.province;
                 param.address   = result.address;
-
+                
             }
-
+            
             _callback(isSuccess,param,info);
         }
         
-        
-        [self.geoQueue removeObjectForKey:_key];
-        [self.geoMap removeObjectForKey:_key];
+        [self.geoQueue removeObjectAtIndex:0];
     }
     
+
     
-    searcher.delegate                 = nil;
+    if (self.geoQueue.count > 0) {
+        YZTBaiduGeoModel *_geoModel = self.geoQueue[0];
+        [self yztBadiduReverseGeoCodeWithOption:_geoModel.rGeoOption
+                                       callback:_geoModel.aCallback];
+    }
+    else
+    {
+        self.isOnGeo = NO;
+    }
+
+    
     
 }
 
 
 #pragma mark <== BMKGeoCodeSearchDelegate ==>
+
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher
                            result:(BMKReverseGeoCodeResult *)result
                         errorCode:(BMKSearchErrorCode)error
 {
+    
+    NSLog(@"yzt_baidu_onGetReverseGeoCodeResult:%@",result.address);
     
     BOOL _flag = NO;
     NSString *_errorStr = nil;
@@ -407,6 +443,7 @@ BMKGeoCodeSearchDelegate>
         case BMK_SEARCH_NO_ERROR:
         {
             _flag = YES;
+            
         }
             break;
         case BMK_SEARCH_AMBIGUOUS_KEYWORD:
@@ -478,7 +515,6 @@ BMKGeoCodeSearchDelegate>
 
     
     [self geoResultAction:_flag
-                 searcher:searcher
                    result:result
                 errorInfo:_errorStr];
     
@@ -486,14 +522,7 @@ BMKGeoCodeSearchDelegate>
     
 }
 
-/*
-- (void)onGetGeoCodeResult:(BMKGeoCodeSearch *)searcher
-                    result:(BMKGeoCodeResult *)result
-                 errorCode:(BMKSearchErrorCode)error
-{
-    NSLog(@"地理编码");
-}
-*/
+
 
 
 
@@ -559,7 +588,7 @@ BMKGeoCodeSearchDelegate>
         else
         {
             NSString *_eMsg =[NSString stringWithFormat:@"搜索失败: %@",errorStr];
-            NSLog(@"baidu_yztNearBy_%@",_eMsg);
+            NSLog(@"yzt_baidu_yztNearBy_%@",_eMsg);
             
             if (callback) {
                 callback(NO,nil,_eMsg);
@@ -576,7 +605,7 @@ BMKGeoCodeSearchDelegate>
                    result:(BMKPoiResult *)result
                 errorInfo:(NSString *)info
 {
-    NSLog(@"baidu_nearbyResult:%@",
+    NSLog(@"yzt_baidu_nearbyResult:%@",
            isSuccess?[NSString stringWithFormat:@"成功搜索到:%d条信息",result.totalPoiNum]:info);
     
     
@@ -632,6 +661,7 @@ BMKGeoCodeSearchDelegate>
 
 
 #pragma mark <== BMKPoiSearchDelegate ==>
+
 - (void)onGetPoiResult:(BMKPoiSearch *)searcher
                 result:(BMKPoiResult *)poiResult
              errorCode:(BMKSearchErrorCode)errorCode
@@ -739,6 +769,7 @@ BMKGeoCodeSearchDelegate>
 
 
 #pragma mark- <线路检索>
+/*
 - (void)yztBaiduRouteSearch:(YZTRouteType)tp
                       start:(CLLocationCoordinate2D)startPoint
                         end:(CLLocationCoordinate2D)endPoint
@@ -779,7 +810,7 @@ BMKGeoCodeSearchDelegate>
             break;
         default:
         {
-            NSLog(@"baidu_RouteSearch:未确定搜索类型");
+            NSLog(@"yzt_baidu_RouteSearch:未确定搜索类型");
             if (callback) {
                 callback(NO,nil,@"未确定搜索类型");
             }
@@ -855,7 +886,7 @@ BMKGeoCodeSearchDelegate>
             }
             else{
                 NSString *_eMsg =[NSString stringWithFormat:@"搜索失败: %@",_str];
-                NSLog(@"baidu_RouteSearch_%@",_eMsg);
+                NSLog(@"yzt_baidu_RouteSearch_%@",_eMsg);
                 
                 if (callback) {
                     callback(NO,nil,_eMsg);
@@ -865,7 +896,7 @@ BMKGeoCodeSearchDelegate>
         else
         {
             NSString *_eMsg =[NSString stringWithFormat:@"搜索失败: %@",errorStr];
-            NSLog(@"baidu_RouteSearch_%@",_eMsg);
+            NSLog(@"yzt_baidu_RouteSearch_%@",_eMsg);
             
             if (callback) {
                 callback(NO,nil,_eMsg);
@@ -884,7 +915,7 @@ BMKGeoCodeSearchDelegate>
                         result:(BMKPolyline *)result
                      errorInfo:(NSString *)info
 {
-    NSLog(@"baidu_routeSearchResult_errorInfo:%@",info);
+    NSLog(@"yzt_baidu_routeSearchResult_errorInfo:%@",info);
     
     
     id _key = nil;
@@ -905,23 +936,7 @@ BMKGeoCodeSearchDelegate>
             //YZTBaiduPOIModel *param = nil;
             
             if (isSuccess) {
-                /*
-                param               = [[YZTBaiduPOIModel alloc]init];
-                param.totalPoiNum   = result.totalPoiNum;
-                param.currPoiNum    = result.currPoiNum;
-                param.pageNum       = result.pageNum;
-                param.pageIndex     = result.pageIndex;
-                
-                NSMutableArray *_ary = [NSMutableArray array];
-                if (result.poiInfoList) {
-                    for (BMKPoiInfo *poiInfo in result.poiInfoList) {
-                        [_ary addObject:[YZTBaiduPOIInfoModel createModelBy:poiInfo]];
-                    }
-                }
-                
-                
-                param.poiInfoList   = _ary;
-                */
+ 
             }
             
             _callback(isSuccess,result,info);
@@ -1201,7 +1216,7 @@ BMKGeoCodeSearchDelegate>
 }
 
 
-/*
+
 - (void)onGetWalkingRouteResult:(BMKRouteSearch *)searcher
                          result:(BMKWalkingRouteResult *)result
                       errorCode:(BMKSearchErrorCode)error
@@ -1270,6 +1285,14 @@ BMKGeoCodeSearchDelegate>
         case kCLAuthorizationStatusNotDetermined:
         {
             NSLog(@"yzt_baidu_CheckLoc_NotDetermined");
+            /* 
+             未设置以下字段会进入此回调
+             Privacy - Location Usage Description
+             Privacy - Location Always Usage Description
+             
+             未设置 Bundle Display Name 也会进入此回调
+             
+             */
         }
             break;
         case kCLAuthorizationStatusRestricted:
@@ -1303,6 +1326,7 @@ BMKGeoCodeSearchDelegate>
 }
 
 #pragma mark- <未整理>
+/*
 - (CLLocationDistance)baiduMapDistanceWithStartPoint:(CLLocationCoordinate2D)startPoint
                                             endPoint:(CLLocationCoordinate2D)endPoint
 {
@@ -1441,9 +1465,10 @@ BMKGeoCodeSearchDelegate>
 
 
 
-
+*/
 
 #pragma mark - getter and setter
+
 - (BMKMapManager *)mapManager
 {
     if (!_mapManager) {
@@ -1461,8 +1486,16 @@ BMKGeoCodeSearchDelegate>
     return _locationService;
 }
 
+- (BMKGeoCodeSearch *)geoCodeSearch
+{
+    if (!_geoCodeSearch) {
+        _geoCodeSearch = [[BMKGeoCodeSearch alloc] init];
+        //_geoCodeSearch.delegate = self;
+    }
+    return _geoCodeSearch;
+}
 
-
+/*
 - (BMKRouteSearch *)routeSearch
 {
     if (!_routeSearch) {
@@ -1472,6 +1505,6 @@ BMKGeoCodeSearchDelegate>
     return _routeSearch;
 }
 
-
+*/
 
 @end

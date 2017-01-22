@@ -7,11 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BaiduMapAPI_Base/BMKBaseComponent.h>
-#import <BaiduMapAPI_Location/BMKLocationComponent.h>
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
-#import <BaiduMapAPI_Map/BMKMapComponent.h>
-#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+#import <CoreLocation/CoreLocation.h>
+
 
 typedef NS_ENUM(NSInteger, LaunchOptionsDirectionsMode) {
     LaunchOptionsDirectionsModeDriving = 0,
@@ -51,7 +48,7 @@ typedef NS_ENUM(NSInteger, YZTRoutePolicyType)
 
 
 @property(nonatomic,strong)CLLocation *location;
-@property(nonatomic,strong,readonly)id baiduUserLocation;
+
 
 @end
 
@@ -89,9 +86,6 @@ typedef NS_ENUM(NSInteger, YZTRoutePolicyType)
 @property (nonatomic, assign) BOOL panoFlag;
 
 
-
-
-
 @end
 
 @interface YZTBaiduPOIModel : NSObject
@@ -111,17 +105,6 @@ typedef NS_ENUM(NSInteger, YZTRoutePolicyType)
 
 @end
 
-
-
-@protocol YZTBaiduMapHelperDelegate <NSObject>
-
-@optional
-- (void)baiduMapUserHeading:(BMKUserLocation *)userLocation;
-//- (void)baiduMapNearbySearchResult:(BMKPoiResult *)poiResult success:(BOOL)success;
-- (void)baiduMapSearchTransitRoute:(BMKPolyline *)polyline;
-- (void)baiduMapSearchDrivingRoute:(BMKPolyline *)polyline;
-// - (void)baiduMapSearchWalkingRoute:(BMKPolyline *)polyline;
-@end
 
 
 /**
@@ -163,13 +146,13 @@ typedef void (^YZTBaiduGeoCodeCallback)(BOOL isSuccess,YZTBaiduGeoModel *geoPara
  */
 typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam,NSString *geoErrorMsg);
 
-
+/*
 typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSString *routeSearchErrorMsg);
-
+*/
 
 @interface YZTBaiduMapHelper : NSObject
 
-@property (nonatomic, weak) id<YZTBaiduMapHelperDelegate> delegate;
+//@property (nonatomic, weak) id<YZTBaiduMapHelperDelegate> delegate;
 
 #pragma mark- <基础类>
 + (YZTBaiduMapHelper *)shareMapHelper;
@@ -250,11 +233,13 @@ typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSS
  *  @param city          所在城市
  *  @param transitPolicy 公交方案 @see BMKTransitPolicy
  */
+
+/*
 - (void)baiduMapTransitRouteSearchFrom:(BMKPlanNode *)startNode
                                     to:(BMKPlanNode *)endNode
                                   city:(NSString *)city
                          transitPolicy:(BMKTransitPolicy)transitPolicy;
-
+*/
 /**
  *  驾车路线检索
  *
@@ -262,10 +247,11 @@ typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSS
  *  @param endNode     终点节点信息
  *  @param drivePolicy 驾车方案 @see BMKDrivingPolicy
  */
+/*
 - (void)baiduMapDriveRouteSearchFrom:(BMKPlanNode *)startNode
                                   to:(BMKPlanNode *)endNode
                          drivePolicy:(BMKDrivingPolicy)drivePolicy;
-
+*/
 /**
  *  步行路线检索
  *
@@ -277,7 +263,7 @@ typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSS
 /*
 - (void)baiduMapWalkRouteSearchFrom:(BMKPlanNode *)startNode
                                  to:(BMKPlanNode *)endNode;
-*/
+
 - (void)yztBaiduRouteSearch:(YZTRouteType)tp
                       start:(CLLocationCoordinate2D)startPoint
                         end:(CLLocationCoordinate2D)endPoint
@@ -285,7 +271,7 @@ typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSS
                 routePolicy:(YZTRoutePolicyType)rpTp
                    callback:(YZTBaiduRouteSearchCallback)callback;
 
-
+*/
 
 
 #pragma mark- <工具类>

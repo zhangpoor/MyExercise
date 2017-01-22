@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		A6F89F3CDE201E462DC4ADF6 /* libPods-BaiduExs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */; };
+		E386A6CF1E31F7C500DEDDA3 /* GeoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6CE1E31F7C500DEDDA3 /* GeoController.m */; };
+		E386A6D21E344A5300DEDDA3 /* POIController.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6D11E344A5300DEDDA3 /* POIController.m */; };
 		E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */; };
+		E39365C41E31F1EB00F37B46 /* LocController.m in Sources */ = {isa = PBXBuildFile; fileRef = E39365C31E31F1EB00F37B46 /* LocController.m */; };
 		E3AC49A91E2E248700AE6CBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49A81E2E248700AE6CBF /* main.m */; };
 		E3AC49AC1E2E248700AE6CBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49AB1E2E248700AE6CBF /* AppDelegate.m */; };
 		E3AC49AF1E2E248700AE6CBF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3AC49AE1E2E248700AE6CBF /* ViewController.m */; };
@@ -21,8 +24,14 @@
 		8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaiduExs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.debug.xcconfig"; sourceTree = "<group>"; };
 		BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.release.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.release.xcconfig"; sourceTree = "<group>"; };
+		E386A6CD1E31F7C500DEDDA3 /* GeoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoController.h; sourceTree = "<group>"; };
+		E386A6CE1E31F7C500DEDDA3 /* GeoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoController.m; sourceTree = "<group>"; };
+		E386A6D01E344A5300DEDDA3 /* POIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIController.h; sourceTree = "<group>"; };
+		E386A6D11E344A5300DEDDA3 /* POIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIController.m; sourceTree = "<group>"; };
 		E39365931E2E2AB700F37B46 /* YZTBaiduMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTBaiduMapHelper.h; sourceTree = "<group>"; };
 		E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YZTBaiduMapHelper.mm; sourceTree = "<group>"; };
+		E39365C21E31F1EB00F37B46 /* LocController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocController.h; sourceTree = "<group>"; };
+		E39365C31E31F1EB00F37B46 /* LocController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocController.m; sourceTree = "<group>"; };
 		E3AC49A41E2E248700AE6CBF /* BaiduExs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BaiduExs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3AC49A81E2E248700AE6CBF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E3AC49AA1E2E248700AE6CBF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -73,6 +82,19 @@
 			path = Baidu;
 			sourceTree = "<group>";
 		};
+		E39365B71E30B48E00F37B46 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E39365C21E31F1EB00F37B46 /* LocController.h */,
+				E39365C31E31F1EB00F37B46 /* LocController.m */,
+				E386A6CD1E31F7C500DEDDA3 /* GeoController.h */,
+				E386A6CE1E31F7C500DEDDA3 /* GeoController.m */,
+				E386A6D01E344A5300DEDDA3 /* POIController.h */,
+				E386A6D11E344A5300DEDDA3 /* POIController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		E3AC499B1E2E248700AE6CBF = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				E39365921E2E2AB700F37B46 /* Baidu */,
+				E39365B71E30B48E00F37B46 /* Controllers */,
 				E3AC49AA1E2E248700AE6CBF /* AppDelegate.h */,
 				E3AC49AB1E2E248700AE6CBF /* AppDelegate.m */,
 				E3AC49AD1E2E248700AE6CBF /* ViewController.h */,
@@ -240,6 +263,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E386A6D21E344A5300DEDDA3 /* POIController.m in Sources */,
+				E39365C41E31F1EB00F37B46 /* LocController.m in Sources */,
+				E386A6CF1E31F7C500DEDDA3 /* GeoController.m in Sources */,
 				E3AC49AF1E2E248700AE6CBF /* ViewController.m in Sources */,
 				E3AC49AC1E2E248700AE6CBF /* AppDelegate.m in Sources */,
 				E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */,
@@ -362,11 +388,11 @@
 			baseConfigurationReference = A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 诚亮 张 (W6G2PYPGQ2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Liang Zhang (722C35K8L3)";
 				DEVELOPMENT_TEAM = MY2CY9936K;
 				INFOPLIST_FILE = BaiduExs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.BaiduExs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yztDept;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
 				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
@@ -379,11 +405,11 @@
 			baseConfigurationReference = BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 诚亮 张 (W6G2PYPGQ2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Liang Zhang (722C35K8L3)";
 				DEVELOPMENT_TEAM = MY2CY9936K;
 				INFOPLIST_FILE = BaiduExs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.BaiduExs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yztDept;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
 				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
