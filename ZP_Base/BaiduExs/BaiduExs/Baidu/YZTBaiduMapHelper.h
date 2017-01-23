@@ -1,13 +1,15 @@
 //
 //  YZTBaiduMapHelper.h
-//  PANewToapAPP
+//  BaiduExs
 //
-//  Created by gao on 16/3/2.
-//  Copyright © 2016年 PingAn. All rights reserved.
+//  Created by zhangpoor on 17/1/20.
+//  Copyright © 2017年 zhangpoor. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+
+
 
 
 typedef NS_ENUM(NSInteger, LaunchOptionsDirectionsMode) {
@@ -130,8 +132,8 @@ typedef void (^YZTBaiduLocateCallback)(BOOL isSuccess,YZTBaiduLocModel *param,NS
  百度地理编码/反地理编码回调
 
  @param isSuccess   是否成功
- @param param       成功后返回信息 YZTBaiduParamModel类型对象
- @param errorStr    失败信息
+ @param geoParam    成功后返回信息 YZTBaiduParamModel类型对象
+ @param geoErrorMsg 失败信息
  */
 typedef void (^YZTBaiduGeoCodeCallback)(BOOL isSuccess,YZTBaiduGeoModel *geoParam,NSString *geoErrorMsg);
 
@@ -141,14 +143,14 @@ typedef void (^YZTBaiduGeoCodeCallback)(BOOL isSuccess,YZTBaiduGeoModel *geoPara
  百度 周边查询回调
 
  @param isSuccess   是否成功
- @param nearByParam 成功后返回信息
- @param geoErrorMsg 失败信息
+ @param poiParam    成功后返回信息
+ @param poiErrorMsg 失败信息
  */
-typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam,NSString *geoErrorMsg);
+typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam,NSString *poiErrorMsg);
 
-/*
-typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSString *routeSearchErrorMsg);
-*/
+
+
+
 
 @interface YZTBaiduMapHelper : NSObject
 
@@ -223,6 +225,17 @@ typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSS
 
 
 
+/**
+ 获取百度map
+
+ @return 返回BMKMapView
+ */
+- (UIView *)getBaiduMapView;
+- (void)mapWillAppear;
+- (void)mapWillDisappear;
+- (void)clearMap;
+
+- (void)mapMoveToLocation:(CLLocationCoordinate2D)point;
 
 
 /**

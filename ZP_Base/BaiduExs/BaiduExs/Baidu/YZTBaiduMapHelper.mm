@@ -1,9 +1,9 @@
 //
 //  YZTBaiduMapHelper.m
-//  PANewToapAPP
+//  BaiduExs
 //
-//  Created by gao on 16/3/2.
-//  Copyright © 2016年 PingAn. All rights reserved.
+//  Created by zhangpoor on 17/1/20.
+//  Copyright © 2017年 zhangpoor. All rights reserved.
 //
 
 #import "YZTBaiduMapHelper.h"
@@ -11,7 +11,10 @@
 //目前定位全部功能依赖
 #import <BaiduMapKit/BaiduMapAPI_Location/BMKLocationComponent.h>
 //目前反地理编码、 Poi功能（周边查询） 等全部功能依赖
-#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapKit/BaiduMapAPI_Search/BMKSearchComponent.h>
+
+//线路检索_地图
+#import <BaiduMapKit/BaiduMapAPI_Map/BMKMapComponent.h>
 
 
 
@@ -19,7 +22,7 @@
 static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww";
 
 
-
+typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSString *routeSearchErrorMsg);
 
 
 
@@ -98,16 +101,16 @@ static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww
 BMKGeneralDelegate,
 BMKLocationServiceDelegate,
 BMKGeoCodeSearchDelegate,
-BMKPoiSearchDelegate
-//BMKRouteSearchDelegate,
+BMKPoiSearchDelegate,
+BMKRouteSearchDelegate
 >
 
 
-@property (nonatomic, strong) BMKMapManager *mapManager;
-@property (nonatomic, strong) BMKLocationService *locationService;
-@property (nonatomic, strong) BMKGeoCodeSearch *geoCodeSearch;
+@property (nonatomic, strong) BMKMapManager         *mapManager;
+@property (nonatomic, strong) BMKLocationService    *locationService;
+@property (nonatomic, strong) BMKGeoCodeSearch      *geoCodeSearch;
 
-
+@property (nonatomic, strong) BMKMapView            *mapView;
 //@property (nonatomic, strong) BMKRouteSearch *routeSearch;
 
 
@@ -127,6 +130,9 @@ BMKPoiSearchDelegate
 
 @property (nonatomic,strong)NSMutableDictionary *routeQueue;
 @property (nonatomic,strong)NSMutableDictionary *routeMap;
+
+
+//@property (nonatomic,copy) void(^searchErrorCodeFunc)(CGFloat height, CGFloat margin);
 
 
 @end
@@ -159,8 +165,6 @@ BMKPoiSearchDelegate
 #pragma mark- <授权模块>
 - (void)yztBaiduAuthorize:(YZTBaiduAuthorizeCallback)callback
 {
-    BOOL _isLoc = [self yztCheckLocationService];
-    
 
     if (self.isPermission) {
         if (callback) {
@@ -292,7 +296,6 @@ BMKPoiSearchDelegate
 #pragma mark <== BMKLocationServiceDelegate ==>
 - (void)didFailToLocateUserWithError:(NSError *)error
 {
-
     NSLog(@"yzt_baidu_百度地图定位失败: %@",error);
     [self locateResultAction:NO
                        param:nil
@@ -301,7 +304,6 @@ BMKPoiSearchDelegate
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    
     NSLog(@"yzt_baidu_百度地图定位成功: %@",userLocation);
     
     YZTBaiduLocModel *param   = [[YZTBaiduLocModel alloc]init];
@@ -358,7 +360,7 @@ BMKPoiSearchDelegate
     [self yztBaiduAuthorize:^(BOOL isSuccess, NSString *errorStr) {
         if (isSuccess) {
 
-            self.geoCodeSearch.delegate = _weakSelf;
+
             BOOL flag = [self.geoCodeSearch reverseGeoCode:option];
             if (!flag) {
                 [_weakSelf geoResultAction:NO
@@ -386,8 +388,6 @@ BMKPoiSearchDelegate
                 result:(BMKReverseGeoCodeResult *)result
              errorInfo:(NSString *)info
 {
-    self.geoCodeSearch.delegate = nil;
-
     if (self.geoQueue.count > 0) {
         YZTBaiduGeoModel *_geoModel = self.geoQueue[0];
         YZTBaiduGeoCodeCallback _callback = _geoModel.aCallback;
@@ -429,96 +429,26 @@ BMKPoiSearchDelegate
 
 
 #pragma mark <== BMKGeoCodeSearchDelegate ==>
-
 - (void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher
                            result:(BMKReverseGeoCodeResult *)result
                         errorCode:(BMKSearchErrorCode)error
 {
-    
     NSLog(@"yzt_baidu_onGetReverseGeoCodeResult:%@",result.address);
     
     BOOL _flag = NO;
-    NSString *_errorStr = nil;
-    switch (error) {
-        case BMK_SEARCH_NO_ERROR:
-        {
-            _flag = YES;
-            
-        }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_KEYWORD:
-        {
-            _errorStr = @"检索词有岐义";
-        }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
-        {
-            _errorStr = @"检索地址有岐义";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS:
-        {
-            _errorStr = @"该城市不支持公交搜索";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
-        {
-            _errorStr = @"不支持跨城市公交";
-        }
-            break;
-        case BMK_SEARCH_RESULT_NOT_FOUND:
-        {
-            _errorStr = @"没有找到检索结果";
-        }
-            break;
-        case BMK_SEARCH_ST_EN_TOO_NEAR:
-        {
-            _errorStr = @"起终点太近";
-        }
-            break;
-        case BMK_SEARCH_KEY_ERROR:
-        {
-            _errorStr = @"key错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_ERROR:
-        {
-            _errorStr = @"网络连接错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_TIMEOUT:
-        {
-            _errorStr = @"网络连接超时";
-        }
-            break;
-        case BMK_SEARCH_PERMISSION_UNFINISHED:
-        {
-            _errorStr = @"还未完成鉴权，请在鉴权通过后重试";
-        }
-            break;
-        case BMK_SEARCH_INDOOR_ID_ERROR:
-        {
-            _errorStr = @"室内图ID错误";
-        }
-            break;
-        case BMK_SEARCH_FLOOR_ERROR:
-        {
-            _errorStr = @"室内图检索楼层错误";
-        }
-            break;
-        default:
-        {
-            _errorStr = @"未知错误";
-        }
-            break;
+    NSString *_errorMsg = nil;
+    
+    if (error == BMK_SEARCH_NO_ERROR) {
+        _flag = YES;
+    }
+    else
+    {
+        _errorMsg = [self searchErrorInfo:error];
     }
 
-    
     [self geoResultAction:_flag
                    result:result
-                errorInfo:_errorStr];
-    
-    
+                errorInfo:_errorMsg];
     
 }
 
@@ -563,7 +493,7 @@ BMKPoiSearchDelegate
 
             
             BMKPoiSearch *poiSearch = [[BMKPoiSearch alloc]init];
-            poiSearch.delegate = _weakSelf;
+            poiSearch.delegate      = _weakSelf;
             
             if (callback) {
                 
@@ -669,78 +599,14 @@ BMKPoiSearchDelegate
     BOOL flag = NO;
     NSString *_errorMsg = nil;
     
-    switch (errorCode) {
-        case BMK_SEARCH_NO_ERROR:
-        {
-            flag = YES;
-        }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_KEYWORD:
-        {
-            _errorMsg = @"检索词有岐义";
-        }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
-        {
-            _errorMsg = @"检索地址有岐义";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS:
-        {
-            _errorMsg = @"该城市不支持公交搜索";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
-        {
-            _errorMsg = @"不支持跨城市公交";
-        }
-            break;
-        case BMK_SEARCH_RESULT_NOT_FOUND:
-        {
-            _errorMsg = @"抱歉，无更多结果";//@"没有找到检索结果";
-        }
-            break;
-        case BMK_SEARCH_ST_EN_TOO_NEAR:
-        {
-            _errorMsg = @"起终点太近";
-        }
-            break;
-        case BMK_SEARCH_KEY_ERROR:
-        {
-            _errorMsg = @"关键字错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_ERROR:
-        {
-            _errorMsg = @"网络连接错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_TIMEOUT:
-        {
-            _errorMsg = @"网络连接超时";
-        }
-            break;
-        case BMK_SEARCH_PERMISSION_UNFINISHED:
-        {
-            _errorMsg = @"还未完成鉴权，请在鉴权通过后重试";
-        }
-            break;
-        case BMK_SEARCH_INDOOR_ID_ERROR:
-        {
-            _errorMsg = @"室内图ID错误";
-        }
-            break;
-        case BMK_SEARCH_FLOOR_ERROR:
-        {
-            _errorMsg = @"室内图检索楼层错误";
-        }
-            break;
-        default:
-        {
-            _errorMsg = @"未知错误";
-        }
-            break;
+    if (errorCode == BMK_SEARCH_NO_ERROR) {
+        flag = YES;
     }
+    else
+    {
+        _errorMsg = [self searchErrorInfo:errorCode];
+    }
+
 
     [self nearbyResultAction:flag
                     searcher:searcher
@@ -768,8 +634,64 @@ BMKPoiSearchDelegate
 */
 
 
+#pragma mark- <地图>
+- (UIView *)getBaiduMapView
+{
+    if (!_mapView) {
+        _mapView                    = [[BMKMapView alloc] init];
+        //_mapView.delegate = self;
+        _mapView.mapType            = BMKMapTypeStandard;
+        _mapView.showsUserLocation  = YES;
+        
+        BMKLocationViewDisplayParam *param  = [[BMKLocationViewDisplayParam alloc]init];
+        param.isRotateAngleValid            = true;//跟随态旋转角度是否生效
+        param.isAccuracyCircleShow          = true;//精度圈是否显示
+        param.locationViewOffsetX           = 0;//定位偏移量(经度)
+        param.locationViewOffsetY           = 0;//定位偏移量（纬度）
+        [_mapView updateLocationViewWithParam:param];
+    }
+    return self.mapView;
+}
+
+- (void)mapWillAppear
+{
+    if (_mapView) {
+        [self.mapView viewWillAppear];
+    }
+    
+}
+
+- (void)mapWillDisappear
+{
+    if (_mapView) {
+        [self.mapView viewWillDisappear];
+    }
+}
+
+- (void)clearMap
+{
+    if (_mapView) {
+        _mapView.delegate = nil;
+        _mapView = nil;
+        
+        
+        NSLog(@"yzt_baidu_clearMap");
+    }
+
+}
+
+#pragma mark 地图操作^
+- (void)mapMoveToLocation:(CLLocationCoordinate2D)point
+{
+    if (_mapView) {
+        [self.mapView setCenterCoordinate:point];
+        self.mapView.showsUserLocation = YES;
+    }
+}
+
+
 #pragma mark- <线路检索>
-/*
+
 - (void)yztBaiduRouteSearch:(YZTRouteType)tp
                       start:(CLLocationCoordinate2D)startPoint
                         end:(CLLocationCoordinate2D)endPoint
@@ -917,7 +839,6 @@ BMKPoiSearchDelegate
 {
     NSLog(@"yzt_baidu_routeSearchResult_errorInfo:%@",info);
     
-    
     id _key = nil;
     
     for (NSNumber *key in self.routeMap.allKeys) {
@@ -930,29 +851,19 @@ BMKPoiSearchDelegate
     if (_key) {
         YZTBaiduRouteSearchCallback _callback = self.routeQueue[_key];
         
-        
         if (_callback) {
-            
-            //YZTBaiduPOIModel *param = nil;
-            
-            if (isSuccess) {
- 
-            }
-            
             _callback(isSuccess,result,info);
         }
-        
         
         [self.routeQueue removeObjectForKey:_key];
         [self.routeMap removeObjectForKey:_key];
     }
     
-    
     searcher.delegate                 = nil;
     searcher                          = nil;
 }
 
-
+/*
 - (void)baiduMapTransitRouteSearchFrom:(BMKPlanNode *)startNode
                                     to:(BMKPlanNode *)endNode
                                   city:(NSString *)city
@@ -1007,7 +918,7 @@ BMKPoiSearchDelegate
         }
     }
 }
-
+*/
 
 #pragma mark <== BMKRouteSearchDelegate ==>
 - (void)onGetWalkingRouteResult:(BMKRouteSearch *)searcher
@@ -1017,103 +928,36 @@ BMKPoiSearchDelegate
     BOOL flag = NO;
     NSString *_errorMsg = nil;
     BMKPolyline *polyline = nil;
-    
-    
-    switch (error) {
-        case BMK_SEARCH_NO_ERROR:
-        {
-            flag = YES;
-            
-            BMKWalkingRouteLine *plan = (BMKWalkingRouteLine *)[result.routes objectAtIndex:0];
-            NSUInteger size = [plan.steps count];
-            int planPointCounts = 0;
-            for (int i = 0; i < size; i++) {
-                BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:i];
-                planPointCounts += walkingStep.pointsCount;
+    if (error == BMK_SEARCH_NO_ERROR) {
+        
+        flag = YES;
+        
+        BMKWalkingRouteLine *plan = (BMKWalkingRouteLine *)[result.routes objectAtIndex:0];
+        NSUInteger size = [plan.steps count];
+        int planPointCounts = 0;
+        for (int i = 0; i < size; i++) {
+            BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:i];
+            planPointCounts += walkingStep.pointsCount;
+        }
+        
+        BMKMapPoint *tempPoints = new BMKMapPoint[planPointCounts];
+        int i = 0;
+        for (int j = 0; j < size; j++) {
+            BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:j];
+            int k = 0;
+            for(k = 0;k < walkingStep.pointsCount;k++) {
+                tempPoints[i].x = walkingStep.points[k].x;
+                tempPoints[i].y = walkingStep.points[k].y;
+                i++;
             }
-            
-            BMKMapPoint *tempPoints = new BMKMapPoint[planPointCounts];
-            int i = 0;
-            for (int j = 0; j < size; j++) {
-                BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:j];
-                int k = 0;
-                for(k = 0;k < walkingStep.pointsCount;k++) {
-                    tempPoints[i].x = walkingStep.points[k].x;
-                    tempPoints[i].y = walkingStep.points[k].y;
-                    i++;
-                }
-            }
-            polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
-            delete [] tempPoints;
         }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_KEYWORD:
-        {
-            _errorMsg = @"检索词有岐义";
-        }
-            break;
-        case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
-        {
-            _errorMsg = @"检索地址有岐义";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS:
-        {
-            _errorMsg = @"该城市不支持公交搜索";
-        }
-            break;
-        case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
-        {
-            _errorMsg = @"不支持跨城市公交";
-        }
-            break;
-        case BMK_SEARCH_RESULT_NOT_FOUND:
-        {
-            _errorMsg = @"抱歉，无更多结果";//@"没有找到检索结果";
-        }
-            break;
-        case BMK_SEARCH_ST_EN_TOO_NEAR:
-        {
-            _errorMsg = @"起终点太近";
-        }
-            break;
-        case BMK_SEARCH_KEY_ERROR:
-        {
-            _errorMsg = @"关键字错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_ERROR:
-        {
-            _errorMsg = @"网络连接错误";
-        }
-            break;
-        case BMK_SEARCH_NETWOKR_TIMEOUT:
-        {
-            _errorMsg = @"网络连接超时";
-        }
-            break;
-        case BMK_SEARCH_PERMISSION_UNFINISHED:
-        {
-            _errorMsg = @"还未完成鉴权，请在鉴权通过后重试";
-        }
-            break;
-        case BMK_SEARCH_INDOOR_ID_ERROR:
-        {
-            _errorMsg = @"室内图ID错误";
-        }
-            break;
-        case BMK_SEARCH_FLOOR_ERROR:
-        {
-            _errorMsg = @"室内图检索楼层错误";
-        }
-            break;
-        default:
-        {
-            _errorMsg = @"未知错误";
-        }
-            break;
+        polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
+        delete [] tempPoints;
     }
-    
+    else
+    {
+        _errorMsg = [self searchErrorInfo:error];
+    }
     [self routeSearchResultAction:flag
                          searcher:searcher
                            result:polyline
@@ -1126,9 +970,13 @@ BMKPoiSearchDelegate
                          result:(BMKDrivingRouteResult *)result
                       errorCode:(BMKSearchErrorCode)error
 {
+    BOOL flag = NO;
+    NSString *_errorMsg = nil;
+    BMKPolyline *polyline = nil;
+    
     if (BMK_SEARCH_NO_ERROR == error) {
         
-        
+        flag = YES;
         
         BMKDrivingRouteLine *plan = (BMKDrivingRouteLine *)[result.routes objectAtIndex:0];
         NSInteger size = [plan.steps count];
@@ -1149,32 +997,33 @@ BMKPoiSearchDelegate
                 i++;
             }
         }
-        BMKPolyline *polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
+        polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
         delete [] tempPoints;
-        
 
-        if (self.delegate && [self.delegate respondsToSelector:@selector(baiduMapSearchDrivingRoute:)]) {
-            [self.delegate baiduMapSearchDrivingRoute:polyline];
-        }
-        
-    }
-    else if (error == BMK_SEARCH_NETWOKR_ERROR || error == BMK_SEARCH_NETWOKR_TIMEOUT) {
-
-    }
-    else if (error == BMK_SEARCH_PERMISSION_UNFINISHED) {
-       
     }
     else {
-      
+        _errorMsg = [self searchErrorInfo:error];
     }
+    
+    [self routeSearchResultAction:flag
+                         searcher:searcher
+                           result:polyline
+                        errorInfo:_errorMsg];
 }
 
 - (void)onGetTransitRouteResult:(BMKRouteSearch *)searcher
                          result:(BMKTransitRouteResult *)result
                       errorCode:(BMKSearchErrorCode)error
 {
+    BOOL flag = NO;
+    NSString *_errorMsg = nil;
+    BMKPolyline *polyline = nil;
+    
     if (BMK_SEARCH_NO_ERROR == error) {
-        BMKTransitRouteLine *plan = (BMKTransitRouteLine*)[result.routes objectAtIndex:0];
+        flag = YES;
+        
+        
+        BMKTransitRouteLine *plan = (BMKTransitRouteLine *)[result.routes objectAtIndex:0];
         // 计算路线方案中的路段数目
         NSUInteger size = [plan.steps count];
         int planPointCounts = 0;
@@ -1196,71 +1045,20 @@ BMKPoiSearchDelegate
             }
         }
         // 通过points构建BMKPolyline
-        BMKPolyline *polyLine = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
+        polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
         delete []tempPoints;
-        
-   
-        if (self.delegate && [self.delegate respondsToSelector:@selector(baiduMapSearchTransitRoute:)]) {
-            [self.delegate baiduMapSearchTransitRoute:polyLine];
-        }
-    }
-    else if (error == BMK_SEARCH_NETWOKR_ERROR || error == BMK_SEARCH_NETWOKR_TIMEOUT) {
-       
-    }
-    else if (error == BMK_SEARCH_PERMISSION_UNFINISHED) {
-       
+
     }
     else {
-       
+        _errorMsg = [self searchErrorInfo:error];
     }
+    
+    
+    [self routeSearchResultAction:flag
+                         searcher:searcher
+                           result:polyline
+                        errorInfo:_errorMsg];
 }
-
-
-
-- (void)onGetWalkingRouteResult:(BMKRouteSearch *)searcher
-                         result:(BMKWalkingRouteResult *)result
-                      errorCode:(BMKSearchErrorCode)error
-{
-    if (BMK_SEARCH_NO_ERROR == error) {
-        
-        BMKWalkingRouteLine *plan = (BMKWalkingRouteLine *)[result.routes objectAtIndex:0];
-        NSUInteger size = [plan.steps count];
-        int planPointCounts = 0;
-        for (int i = 0; i < size; i++) {
-            BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:i];
-            planPointCounts += walkingStep.pointsCount;
-        }
-        
-        BMKMapPoint *tempPoints = new BMKMapPoint[planPointCounts];
-        int i = 0;
-        for (int j = 0; j < size; j++) {
-            BMKWalkingStep *walkingStep = [plan.steps objectAtIndex:j];
-            int k = 0;
-            for(k = 0;k < walkingStep.pointsCount;k++) {
-                tempPoints[i].x = walkingStep.points[k].x;
-                tempPoints[i].y = walkingStep.points[k].y;
-                i++;
-            }
-        }
-        BMKPolyline *polyline = [BMKPolyline polylineWithPoints:tempPoints count:planPointCounts];
-        delete [] tempPoints;
-        
-        [YZTProgressHUD dismiss];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(baiduMapSearchWalkingRoute:)]) {
-            [self.delegate baiduMapSearchWalkingRoute:polyline];
-        }
-    }
-    else if (error == BMK_SEARCH_NETWOKR_ERROR || error == BMK_SEARCH_NETWOKR_TIMEOUT) {
-        [YZTProgressHUD showErrorWithStatus:YZTNetworkRequestFailDefaultMessage];
-    }
-    else if (error == BMK_SEARCH_PERMISSION_UNFINISHED) {
-        [YZTProgressHUD showErrorWithStatus:permissionUnfinished];
-    }
-    else {
-        [YZTProgressHUD showErrorWithStatus:@"抱歉，未找到路线"];
-    }
-}
-*/
 
 
 /** 赞未使用
@@ -1271,6 +1069,263 @@ BMKPoiSearchDelegate
  *
 - (void)onGetRidingRouteResult:(BMKRouteSearch*)searcher result:(BMKRidingRouteResult*)result errorCode:(BMKSearchErrorCode)error;
  */
+
+
+
+
+#pragma mark- <pravite>
+- (NSString *)searchErrorInfo:(BMKSearchErrorCode)code
+{
+    NSString *_eStr = nil;
+    switch (code) {
+        case BMK_SEARCH_NO_ERROR:
+        {
+            _eStr = nil;
+        }
+            break;
+        case BMK_SEARCH_AMBIGUOUS_KEYWORD:
+        {
+            _eStr = @"检索词有岐义";
+        }
+            break;
+        case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
+        {
+            _eStr = @"检索地址有岐义";
+        }
+            break;
+        case BMK_SEARCH_NOT_SUPPORT_BUS:
+        {
+            _eStr = @"该城市不支持公交搜索";
+        }
+            break;
+        case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
+        {
+            _eStr = @"不支持跨城市公交";
+        }
+            break;
+        case BMK_SEARCH_RESULT_NOT_FOUND:
+        {
+            _eStr = @"抱歉，无更多结果";//@"没有找到检索结果";
+        }
+            break;
+        case BMK_SEARCH_ST_EN_TOO_NEAR:
+        {
+            _eStr = @"起终点太近";
+        }
+            break;
+        case BMK_SEARCH_KEY_ERROR:
+        {
+            _eStr = @"关键字错误";
+        }
+            break;
+        case BMK_SEARCH_NETWOKR_ERROR:
+        {
+            _eStr = @"网络连接错误";
+        }
+            break;
+        case BMK_SEARCH_NETWOKR_TIMEOUT:
+        {
+            _eStr = @"网络连接超时";
+        }
+            break;
+        case BMK_SEARCH_PERMISSION_UNFINISHED:
+        {
+            _eStr = @"还未完成鉴权，请在鉴权通过后重试";
+        }
+            break;
+        case BMK_SEARCH_INDOOR_ID_ERROR:
+        {
+            _eStr = @"室内图ID错误";
+        }
+            break;
+        case BMK_SEARCH_FLOOR_ERROR:
+        {
+            _eStr = @"室内图检索楼层错误";
+        }
+            break;
+        default:
+        {
+            _eStr = @"未知错误";
+        }
+            break;
+    }
+    
+    return _eStr;
+}
+
+/*
+- (void)searchErrorCodeFunc:(BMKSearchErrorCode)code
+                   callback:(void(^)(BMKSearchErrorCode,NSString *))callback
+{
+    NSString *_eStr = nil;
+    switch (code) {
+        case BMK_SEARCH_NO_ERROR:
+        {
+            _eStr = nil;
+        }
+            break;
+        case BMK_SEARCH_AMBIGUOUS_KEYWORD:
+        {
+            _eStr = @"检索词有岐义";
+        }
+            break;
+        case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
+        {
+            _eStr = @"检索地址有岐义";
+        }
+            break;
+        case BMK_SEARCH_NOT_SUPPORT_BUS:
+        {
+            _eStr = @"该城市不支持公交搜索";
+        }
+            break;
+        case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
+        {
+            _eStr = @"不支持跨城市公交";
+        }
+            break;
+        case BMK_SEARCH_RESULT_NOT_FOUND:
+        {
+            _eStr = @"抱歉，无更多结果";//@"没有找到检索结果";
+        }
+            break;
+        case BMK_SEARCH_ST_EN_TOO_NEAR:
+        {
+            _eStr = @"起终点太近";
+        }
+            break;
+        case BMK_SEARCH_KEY_ERROR:
+        {
+            _eStr = @"关键字错误";
+        }
+            break;
+        case BMK_SEARCH_NETWOKR_ERROR:
+        {
+            _eStr = @"网络连接错误";
+        }
+            break;
+        case BMK_SEARCH_NETWOKR_TIMEOUT:
+        {
+            _eStr = @"网络连接超时";
+        }
+            break;
+        case BMK_SEARCH_PERMISSION_UNFINISHED:
+        {
+            _eStr = @"还未完成鉴权，请在鉴权通过后重试";
+        }
+            break;
+        case BMK_SEARCH_INDOOR_ID_ERROR:
+        {
+            _eStr = @"室内图ID错误";
+        }
+            break;
+        case BMK_SEARCH_FLOOR_ERROR:
+        {
+            _eStr = @"室内图检索楼层错误";
+        }
+            break;
+        default:
+        {
+            _eStr = @"未知错误";
+        }
+            break;
+    }
+    
+    
+    if (callback) {
+        callback(code,_eStr);
+    }
+}
+
+
+- (void(^)(BMKSearchErrorCode code,NSString *eStr))searchErrorCodeFunc:(BMKSearchErrorCode)code
+{
+ 
+ 
+    void(^block)(BMKSearchErrorCode, NSString *) = ^(BMKSearchErrorCode aCode,NSString *aEStr){
+ 
+        aCode = code;
+ 
+        switch (aCode) {
+            case BMK_SEARCH_NO_ERROR:
+            {
+                aEStr = nil;
+            }
+                break;
+            case BMK_SEARCH_AMBIGUOUS_KEYWORD:
+            {
+                aEStr = @"检索词有岐义";
+            }
+                break;
+            case BMK_SEARCH_AMBIGUOUS_ROURE_ADDR:
+            {
+                aEStr = @"检索地址有岐义";
+            }
+                break;
+            case BMK_SEARCH_NOT_SUPPORT_BUS:
+            {
+                aEStr = @"该城市不支持公交搜索";
+            }
+                break;
+            case BMK_SEARCH_NOT_SUPPORT_BUS_2CITY:
+            {
+                aEStr = @"不支持跨城市公交";
+            }
+                break;
+            case BMK_SEARCH_RESULT_NOT_FOUND:
+            {
+                aEStr = @"抱歉，无更多结果";//@"没有找到检索结果";
+            }
+                break;
+            case BMK_SEARCH_ST_EN_TOO_NEAR:
+            {
+                aEStr = @"起终点太近";
+            }
+                break;
+            case BMK_SEARCH_KEY_ERROR:
+            {
+                aEStr = @"关键字错误";
+            }
+                break;
+            case BMK_SEARCH_NETWOKR_ERROR:
+            {
+                aEStr = @"网络连接错误";
+            }
+                break;
+            case BMK_SEARCH_NETWOKR_TIMEOUT:
+            {
+                aEStr = @"网络连接超时";
+            }
+                break;
+            case BMK_SEARCH_PERMISSION_UNFINISHED:
+            {
+                aEStr = @"还未完成鉴权，请在鉴权通过后重试";
+            }
+                break;
+            case BMK_SEARCH_INDOOR_ID_ERROR:
+            {
+                aEStr = @"室内图ID错误";
+            }
+                break;
+            case BMK_SEARCH_FLOOR_ERROR:
+            {
+                aEStr = @"室内图检索楼层错误";
+            }
+                break;
+            default:
+            {
+                aEStr = @"未知错误";
+            }
+                break;
+        }
+        
+        
+    };
+    
+    
+    return block;
+}
+*/
 
 #pragma mark- <工具类>
 -(BOOL)yztCheckLocationService{
@@ -1490,7 +1545,7 @@ BMKPoiSearchDelegate
 {
     if (!_geoCodeSearch) {
         _geoCodeSearch = [[BMKGeoCodeSearch alloc] init];
-        //_geoCodeSearch.delegate = self;
+        _geoCodeSearch.delegate = self;
     }
     return _geoCodeSearch;
 }

@@ -10,13 +10,15 @@
 #import <Masonry/Masonry.h>
 
 
-
-
 #import "LocController.h"
 #import "GeoController.h"
 #import "POIController.h"
+#import "MyMapController.h"
 
 @interface ViewController ()
+{
+    CGFloat _btnDY;
+}
 
 @end
 
@@ -26,6 +28,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    
+    _btnDY = 10;
     
     [self createUI];
 }
@@ -60,7 +64,7 @@
     [_btnRGeo mas_makeConstraints:^(MASConstraintMaker *make){
         
         make.left.equalTo(_btnLoc);
-        make.top.equalTo(_btnLoc.mas_bottom).offset(15);
+        make.top.equalTo(_btnLoc.mas_bottom).offset(_btnDY);
         make.size.equalTo(_btnLoc);
     }];
     
@@ -75,8 +79,23 @@
     [_btnPOI mas_makeConstraints:^(MASConstraintMaker *make){
         
         make.left.equalTo(_btnRGeo);
-        make.top.equalTo(_btnRGeo.mas_bottom).offset(15);
+        make.top.equalTo(_btnRGeo.mas_bottom).offset(_btnDY);
         make.size.equalTo(_btnRGeo);
+    }];
+    
+    UIButton *_btnMap = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_btnMap setBackgroundColor:[UIColor grayColor]];
+    [_btnMap setTitle:@"百度地图" forState:UIControlStateNormal];
+    [_btnMap addTarget:self
+                action:@selector(mapAciton)
+      forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btnMap];
+    
+    [_btnMap mas_makeConstraints:^(MASConstraintMaker *make){
+        
+        make.left.equalTo(_btnPOI);
+        make.top.equalTo(_btnPOI.mas_bottom).offset(_btnDY);
+        make.size.equalTo(_btnPOI);
     }];
     
     
@@ -104,6 +123,19 @@
     POIController *_poiVC = [[POIController alloc]init];
     
     [self.navigationController pushViewController:_poiVC animated:YES];
+}
+
+- (void)mapAciton
+{
+    MyMapController *_mapVC = [[MyMapController alloc]init];
+    
+    _mapVC.abc = YES;
+    
+    
+    NSLog(@"%@",_mapVC.abc?@"y":@"n");
+    
+    
+    [self.navigationController pushViewController:_mapVC animated:YES];
 }
 
 
