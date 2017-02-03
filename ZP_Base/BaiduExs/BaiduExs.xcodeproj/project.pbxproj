@@ -204,7 +204,7 @@
 				TargetAttributes = {
 					E3AC49A31E2E248700AE6CBF = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 9ZK35QX4B4;
+						DevelopmentTeam = MY2CY9936K;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Manual;
 					};
@@ -422,14 +422,14 @@
 			baseConfigurationReference = A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ping An Insurance(Group) Company Of China,LTD. (9ZK35QX4B4)";
-				DEVELOPMENT_TEAM = 9ZK35QX4B4;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Liang Zhang (722C35K8L3)";
+				DEVELOPMENT_TEAM = MY2CY9936K;
 				INFOPLIST_FILE = BaiduExs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yzt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yztDept;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1fd7ba40-d2fe-402f-8324-e293e0d357f9";
-				PROVISIONING_PROFILE_SPECIFIER = PaYizhangtong;
+				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
+				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -439,14 +439,14 @@
 			baseConfigurationReference = BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ping An Insurance(Group) Company Of China,LTD. (9ZK35QX4B4)";
-				DEVELOPMENT_TEAM = 9ZK35QX4B4;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Cheng Liang Zhang (722C35K8L3)";
+				DEVELOPMENT_TEAM = MY2CY9936K;
 				INFOPLIST_FILE = BaiduExs/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yzt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pingan.yztDept;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1fd7ba40-d2fe-402f-8324-e293e0d357f9";
-				PROVISIONING_PROFILE_SPECIFIER = PaYizhangtong;
+				PROVISIONING_PROFILE = "3121e2e6-aa07-484b-acd5-6b2fdcb969d5";
+				PROVISIONING_PROFILE_SPECIFIER = Dept_dev_common;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

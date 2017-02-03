@@ -128,11 +128,7 @@
 - (void)mapAciton
 {
     MyMapController *_mapVC = [[MyMapController alloc]init];
-    
-    _mapVC.abc = YES;
-    
-    
-    NSLog(@"%@",_mapVC.abc?@"y":@"n");
+
     
     
     [self.navigationController pushViewController:_mapVC animated:YES];

@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "YZTBaiduMapHelper.h"
+
 @interface POIController : UIViewController
+
+@property(nonatomic,strong)YZTBaiduLocModel *locModel;
+
 
 @end

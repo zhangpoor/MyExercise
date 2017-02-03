@@ -23,7 +23,7 @@ static NSString * const kAppKeyForDev_dept  = @"Powa2XFyxxZ287ErsGcpgxEnSUeEhAww
 
 
 typedef void (^YZTBaiduRouteSearchCallback)(BOOL isSuccess,BMKPolyline *line,NSString *routeSearchErrorMsg);
-
+typedef void (^YZTBaiduPrivateLocateCallback)(BOOL isSuccess,BMKUserLocation *param,NSString *eMsg);
 
 
 
@@ -102,6 +102,8 @@ BMKGeneralDelegate,
 BMKLocationServiceDelegate,
 BMKGeoCodeSearchDelegate,
 BMKPoiSearchDelegate,
+BMKMapViewDelegate,
+
 BMKRouteSearchDelegate
 >
 
@@ -119,6 +121,7 @@ BMKRouteSearchDelegate
 @property (nonatomic,strong)NSMutableArray *authorizeQueue;
 
 @property (nonatomic,strong)NSMutableArray *locateQueue;
+@property (nonatomic,strong)NSMutableArray *privateLocQueue;
 
 @property (nonatomic,strong)NSMutableArray *geoQueue;
 @property (nonatomic) BOOL isOnGeo;
@@ -149,6 +152,8 @@ BMKRouteSearchDelegate
         
         baiduMapHelper.authorizeQueue   = [NSMutableArray array];
         baiduMapHelper.locateQueue      = [NSMutableArray array];
+        baiduMapHelper.privateLocQueue  = [NSMutableArray array];
+        
         baiduMapHelper.geoQueue         = [NSMutableArray array];
 
         baiduMapHelper.nearbyQueue      = [NSMutableDictionary dictionary];
@@ -251,7 +256,7 @@ BMKRouteSearchDelegate
     if (callback) {
         [self.locateQueue addObject:callback];
     }
-    if (self.locateQueue.count > 1) {
+    if (self.locateQueue.count > 1 || self.privateLocQueue.count > 1 ) {
         
         return;
     }
@@ -266,7 +271,8 @@ BMKRouteSearchDelegate
         {
             [_weakSelf locateResultAction:NO
                                     param:nil
-                                     info:@"请在[系统设置]中打开定位开关"];
+                                     info:@"请在[系统设置]中打开定位开关"
+                                   oParam:nil];
              NSLog(@"yzt_baidu_百度地图yztBaiduLocate定位失败: %@",errorStr);
              
 
@@ -274,9 +280,39 @@ BMKRouteSearchDelegate
     }];
 }
 
+- (void)yztBaiduLocPrivate:(YZTBaiduPrivateLocateCallback)callback
+{
+    if (callback) {
+        [self.privateLocQueue addObject:callback];
+    }
+    if (self.locateQueue.count > 1 || self.privateLocQueue.count > 1 ) {
+        
+        return;
+    }
+    __weak typeof(self) _weakSelf = self;
+    
+    
+    [self yztBaiduAuthorize:^(BOOL isSuccess, NSString *errorStr) {
+        if (isSuccess) {
+            [_weakSelf.locationService startUserLocationService];
+        }
+        else
+        {
+            [_weakSelf locateResultAction:NO
+                                    param:nil
+                                     info:@"请在[系统设置]中打开定位开关"
+                                   oParam:nil];
+            NSLog(@"yzt_baidu_百度地图yztBaiduLocate定位失败: %@",errorStr);
+            
+            
+        }
+    }];
+}
+
 - (void)locateResultAction:(BOOL)isSuccess
                      param:(YZTBaiduLocModel *)param
                       info:(NSString *)info
+                    oParam:(BMKUserLocation *)userLocation
 {
     if (self.isPermission) {
         [self.locationService stopUserLocationService];
@@ -291,6 +327,16 @@ BMKRouteSearchDelegate
             _callback(isSuccess,param,info);
         }
     }
+    
+    while (self.privateLocQueue.count > 0) {
+        YZTBaiduPrivateLocateCallback _callback = self.privateLocQueue[0];
+        
+        [self.privateLocQueue removeObjectAtIndex:0];
+        
+        if (_callback) {
+            _callback(isSuccess,userLocation,info);
+        }
+    }
 }
 
 #pragma mark <== BMKLocationServiceDelegate ==>
@@ -299,7 +345,8 @@ BMKRouteSearchDelegate
     NSLog(@"yzt_baidu_百度地图定位失败: %@",error);
     [self locateResultAction:NO
                        param:nil
-                        info:@"请在[系统设置]中打开定位开关"];
+                        info:@"请在[系统设置]中打开定位开关"
+                      oParam:nil];
 }
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
@@ -311,7 +358,8 @@ BMKRouteSearchDelegate
     
     [self locateResultAction:YES
                        param:param
-                        info:nil];
+                        info:nil
+                      oParam:userLocation];
 }
 
 /* 暂未使用的回调
@@ -635,20 +683,32 @@ BMKRouteSearchDelegate
 
 
 #pragma mark- <地图>
-- (UIView *)getBaiduMapView
+- (UIView *)getBaiduMapViewithZoomLv:(CGFloat)zoomLv
 {
     if (!_mapView) {
         _mapView                    = [[BMKMapView alloc] init];
-        //_mapView.delegate = self;
+        _mapView.delegate = self;
         _mapView.mapType            = BMKMapTypeStandard;
         _mapView.showsUserLocation  = YES;
+        _mapView.showMapScaleBar    = YES;
         
+        CGFloat _lv =
+                (zoomLv > 1) ?
+                        1 : ( zoomLv < 0 ? 0 : zoomLv) ;
+        
+        _mapView.zoomLevel          = 3 + ( 21 - 3) * _lv ;
+        
+        [self showUserCompletion:nil];
+        
+        
+        /*
         BMKLocationViewDisplayParam *param  = [[BMKLocationViewDisplayParam alloc]init];
         param.isRotateAngleValid            = true;//跟随态旋转角度是否生效
         param.isAccuracyCircleShow          = true;//精度圈是否显示
         param.locationViewOffsetX           = 0;//定位偏移量(经度)
         param.locationViewOffsetY           = 0;//定位偏移量（纬度）
         [_mapView updateLocationViewWithParam:param];
+         */
     }
     return self.mapView;
 }
@@ -681,17 +741,287 @@ BMKRouteSearchDelegate
 }
 
 #pragma mark 地图操作^
+- (void)showUserCompletion:(void(^)(BOOL isSuccess, YZTBaiduLocModel *param, NSString *eMsg))callback
+{
+    __weak typeof(self) _weakSelf           = self;
+    
+    [self yztBaiduLocPrivate:
+     ^(BOOL isSuccess, BMKUserLocation *param, NSString *eMsg) {
+         
+         YZTBaiduLocModel *_result  = nil;
+         BOOL _flag                 = NO;
+         NSString *_eMsg            = eMsg;
+         
+         if (isSuccess) {
+             _result = [[YZTBaiduLocModel alloc]init];
+             _result.location = param.location;
+             
+             if (_weakSelf.mapView) {
+                 
+                 [_weakSelf.mapView updateLocationData:param];
+                 [_weakSelf mapMoveToLocation:param.location.coordinate];
+
+                 _flag = YES;
+             }
+             else
+             {
+                 _eMsg = @"未能获得地图信息";
+             }
+         }
+         
+         if (callback) {
+             callback(_flag,_result,_eMsg);
+         }
+         
+     }];
+}
+
 - (void)mapMoveToLocation:(CLLocationCoordinate2D)point
 {
     if (_mapView) {
         [self.mapView setCenterCoordinate:point];
-        self.mapView.showsUserLocation = YES;
+        _mapView.mapScaleBarPosition    = {20,20};
     }
 }
 
+- (void)mapZoomAction:(CGFloat)dZoomLv
+{
+    CGFloat _lv = _mapView.zoomLevel + dZoomLv ;
+    
+    if (_lv > 21) {
+        _lv = 21;
+    }
+    
+    if (_lv < 3)
+    {
+        _lv = 3;
+    }
+    
+    _mapView.zoomLevel          = _lv ;
+}
+
+- (void)mapGetRouteStartPoint:(CLLocationCoordinate2D)sp
+                     endPoint:(CLLocationCoordinate2D)ep
+{
+    [self yztBaiduRouteSearch:YZTRouteTpWalking
+                        start:sp
+                          end:ep
+                         city:nil
+                  routePolicy:RPTP_NONE
+                     callback:
+     ^(BOOL isSuccess, BMKPolyline *line, NSString *routeSearchErrorMsg) {
+         if (isSuccess) {
+             [self.mapView addOverlay:line];
+         }
+     }];
+}
+
+#pragma mark map delegate
+/**
+ *地图初始化完毕时会调用此接口
+ *@param mapView 地图View
+ */
+- (void)mapViewDidFinishLoading:(BMKMapView *)mapView
+{
+    
+}
+
+/**
+ *地图渲染完毕后会调用此接口
+ *@param mapView 地图View
+ */
+- (void)mapViewDidFinishRendering:(BMKMapView *)mapView
+{
+    
+}
+
+/**
+ *根据anntation生成对应的View
+ *@param mapView 地图View
+ *@param annotation 指定的标注
+ *@return 生成的标注View
+ */
+- (BMKAnnotationView *)mapView:(BMKMapView *)mapView
+             viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    return nil;
+}
+
+/**
+ *当选中一个annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param view 选中的annotation view
+ */
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    
+}
+
+/**
+ *当点击annotation view弹出的泡泡时，调用此接口
+ *@param mapView 地图View
+ *@param view 泡泡所属的annotation view
+ */
+- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
+{
+
+}
+
+
+/**
+ *根据overlay生成对应的View
+ *@param mapView 地图View
+ *@param overlay 指定的overlay
+ *@return 生成的覆盖物View
+ */
+- (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
+{
+    return nil;
+}
+
+/**
+ *点中覆盖物后会回调此接口，目前只支持点中BMKPolylineView时回调
+ *@param mapView 地图View
+ *@param overlayView 覆盖物view信息
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedBMKOverlayView:(BMKOverlayView *)overlayView
+{
+    
+}
+
+/**
+ *点中底图标注后会回调此接口
+ *@param mapView 地图View
+ *@param mapPoi 标注点信息
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi*)mapPoi
+{
+    
+}
+
+/**
+ *长按地图时会回调此接口
+ *@param mapView 地图View
+ *@param coordinate 返回长按事件坐标点的经纬度
+ */
+- (void)mapview:(BMKMapView *)mapView onLongClick:(CLLocationCoordinate2D)coordinate
+{
+    
+}
+
+/**
+ *地图状态改变完成后会调用此接口
+ *@param mapView 地图View
+ */
+- (void)mapStatusDidChanged:(BMKMapView *)mapView
+{
+
+}
+
+
+/**
+ *地图渲染每一帧画面过程中，以及每次需要重绘地图时（例如添加覆盖物）都会调用此接口
+ *@param mapView 地图View
+ *@param status 此时地图的状态
+ 
+- (void)mapView:(BMKMapView *)mapView onDrawMapFrame:(BMKMapStatus*)status;
+*/
+/**
+ *地图区域即将改变时会调用此接口
+ *@param mapView 地图View
+ *@param animated 是否动画
+
+- (void)mapView:(BMKMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
+ */
+/**
+ *地图区域改变完成后会调用此接口
+ *@param mapView 地图View
+ *@param animated 是否动画
+ 
+- (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
+*/
+
+
+/**
+ *当mapView新添加annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param views 新添加的annotation views
+
+- (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views;
+ */
+
+
+/**
+ *当取消选中一个annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param views 取消选中的annotation views
+
+- (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view;
+ */
+/**
+ *拖动annotation view时，若view的状态发生变化，会调用此函数。ios3.2以后支持
+ *@param mapView 地图View
+ *@param view annotation view
+ *@param newState 新状态
+ *@param oldState 旧状态
+
+- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
+   fromOldState:(BMKAnnotationViewDragState)oldState;
+ */
+
+
+
+
+/**
+ *当mapView新添加overlay views时，调用此接口
+ *@param mapView 地图View
+ *@param overlayViews 新添加的overlay views
+
+- (void)mapView:(BMKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews;
+ */
+
+
+
+
+/**
+ *点中底图空白处会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 空白处坐标点的经纬度
+
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate;
+ */
+/**
+ *双击地图时会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 返回双击处坐标点的经纬度
+
+- (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate;
+ */
+
+
+/**
+ *3DTouch 按地图时会回调此接口（仅在支持3D Touch，且fouchTouchEnabled属性为YES时，会回调此接口）
+ *@param mapview 地图View
+ *@param coordinate 触摸点的经纬度
+ *@param force 触摸该点的力度(参考UITouch的force属性)
+ *@param maximumPossibleForce 当前输入机制下的最大可能力度(参考UITouch的maximumPossibleForce属性)
+
+- (void)mapview:(BMKMapView *)mapView onForceTouch:(CLLocationCoordinate2D)coordinate force:(CGFloat)force maximumPossibleForce:(CGFloat)maximumPossibleForce;
+ */
+
+
+/**
+ *地图进入/移出室内图会调用此接口
+ *@param mapview 地图View
+ *@param flag  YES:进入室内图; NO:移出室内图
+ *@param info 室内图信息
+
+- (void)mapview:(BMKMapView *)mapView baseIndoorMapWithIn:(BOOL)flag baseIndoorMapInfo:(BMKBaseIndoorMapInfo *)info;
+ */
+
+
 
 #pragma mark- <线路检索>
-
 - (void)yztBaiduRouteSearch:(YZTRouteType)tp
                       start:(CLLocationCoordinate2D)startPoint
                         end:(CLLocationCoordinate2D)endPoint

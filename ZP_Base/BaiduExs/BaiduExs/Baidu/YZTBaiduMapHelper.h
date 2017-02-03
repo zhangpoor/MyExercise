@@ -225,18 +225,23 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 
 
 
+
+
+
 /**
  获取百度map
 
- @return 返回BMKMapView
+ @param     zoomLv 比例因子 0～1
+ @return    返回BMKMapView
  */
-- (UIView *)getBaiduMapView;
+- (UIView *)getBaiduMapViewithZoomLv:(CGFloat)zoomLv;
 - (void)mapWillAppear;
 - (void)mapWillDisappear;
 - (void)clearMap;
 
+- (void)showUserCompletion:(void(^)(BOOL isSuccess, YZTBaiduLocModel *param, NSString *eMsg))callback;
 - (void)mapMoveToLocation:(CLLocationCoordinate2D)point;
-
+- (void)mapZoomAction:(CGFloat)dZoomLv;
 
 /**
  *  公交路线检索

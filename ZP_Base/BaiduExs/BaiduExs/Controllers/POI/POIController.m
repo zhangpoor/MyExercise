@@ -9,7 +9,7 @@
 #import "POIController.h"
 #import <Masonry/Masonry.h>
 
-#import "YZTBaiduMapHelper.h"
+
 
 #import "My001TableCell.h"
 
@@ -77,6 +77,22 @@
         make.size.mas_equalTo(CGSizeMake(140, 40));
     }];
     
+    UIButton *_btnPoi = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_btnPoi setBackgroundColor:[UIColor grayColor]];
+    [_btnPoi setTitle:@"反地理编码" forState:UIControlStateNormal];
+    [_btnPoi addTarget:self
+                action:@selector(poiAciton:)
+      forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_btnPoi];
+    
+    [_btnPoi mas_makeConstraints:^(MASConstraintMaker *make){
+        
+        make.left.mas_equalTo(self.btnLoc.mas_right).offset(5);
+        make.top.equalTo(self.btnLoc);
+        make.size.equalTo(self.btnLoc);
+    }];
+    
+    
     
     self.poiTb                  = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     self.poiTb.delegate         = self;
@@ -142,7 +158,36 @@
     
 }
 
-
+- (void)poiAciton:(UIButton *)target
+{
+    if (!self.locModel) {
+        return;
+    }
+    
+    target.enabled = NO;
+    
+    YZTBaiduMapHelper *_bdHelper        = [YZTBaiduMapHelper shareMapHelper];
+    __weak typeof (target) _weakBtn     = target;
+    __weak typeof(self) _weakSelf       = self;
+    
+    [_bdHelper yztBizNearByWithLocation:self.locModel.location.coordinate
+                              pageIndex:0
+                                keyword:@"麦当劳"
+                               callback:
+     ^(BOOL isSuccess, YZTBaiduPOIModel *poiParam, NSString *poiErrorMsg) {
+         if (isSuccess) {
+             _weakSelf.poiList = poiParam.poiInfoList;
+         }
+         else
+         {
+             _weakSelf.poiList = @[];
+         }
+         
+         [_weakSelf.poiTb reloadData];
+         _weakBtn.enabled = YES;
+     }];
+ 
+}
 
 
 

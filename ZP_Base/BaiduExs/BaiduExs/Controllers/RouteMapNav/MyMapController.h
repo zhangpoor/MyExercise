@@ -10,6 +10,6 @@
 
 @interface MyMapController : UIViewController
 
-@property(nonatomic)BOOL abc;
+
 
 @end
