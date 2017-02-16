@@ -19,19 +19,22 @@ PODS:
     - JSPatch/Core (= 1.1.2)
   - JSPatch/Core (1.1.2)
   - Masonry (1.0.2)
+  - SnapKit (3.1.2)
 
 DEPENDENCIES:
   - AFNetworking
   - BaiduMapKit (= 3.2)
   - JSPatch
   - Masonry
+  - SnapKit
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   BaiduMapKit: c23aee47be89b2b939a92acfd06627114e897662
   JSPatch: 741205ebb2e2238c223a436e4c8cf75cf40a345f
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 1c1313f8567f1123482319ab18cd12f9f604fb63
+PODFILE CHECKSUM: 93cd7e48cdf7d6a4e89ed19773a65b41e7ba6352
 
 COCOAPODS: 1.1.1

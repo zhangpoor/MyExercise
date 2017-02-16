@@ -11,10 +11,15 @@
 
 #import "YZTBaiduMapHelper.h"
 
+#import "POIController.h"
 
-@interface MyMapController ()
+
+
+
+@interface MyMapController ()<POIDelegate>
 {
     YZTBaiduLocModel *_locParam;
+    BOOL _isFirst;
 }
 
 
@@ -27,6 +32,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[YZTBaiduMapHelper shareMapHelper] mapWillAppear];
+    
+    if (_isFirst) {
+        _isFirst = NO;
+        [self locAciton];
+    }
+    
+    
 }
 
 
@@ -49,13 +61,17 @@
     
     [self createUI];
     
+
 }
+
+
+
 
 
 
 - (void)initData
 {
-
+    _isFirst = YES;
 }
 
 - (void)createUI
@@ -113,11 +129,11 @@
     [_nearBy addTarget:self
                 action:@selector(nearByAciton)
        forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_zoomDri];
+    [self.view addSubview:_nearBy];
     [_nearBy mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_zoomAdd.mas_right).offset(5);
-        make.top.equalTo(_zoomAdd);
-        make.size.equalTo(_zoomAdd);
+        make.left.mas_equalTo(_zoomDri.mas_right).offset(5);
+        make.top.equalTo(_zoomDri);
+        make.size.equalTo(_zoomDri);
     }];
     
     
@@ -173,6 +189,7 @@
 {
     
     __block YZTBaiduMapHelper *_bdHelper    = [YZTBaiduMapHelper shareMapHelper];
+    __weak typeof(self) _weakSelf           = self;
     
     if (_locParam) {
         
@@ -182,7 +199,7 @@
                 
                 _locParam = param;
                 
-                
+                [_weakSelf doNearBy];
                 
             }
             
@@ -190,9 +207,40 @@
     }
     else
     {
-    
+        [self doNearBy];
     }
 }
 
+- (void)doNearBy
+{
+    POIController *_poiVC   = [[POIController alloc]init];
+    _poiVC.locModel         = _locParam;
+    _poiVC.delegate         = self;
+    [self.navigationController pushViewController:_poiVC animated:YES];
+}
+
+
+-(void)cellClick:(YZTBaiduPOIInfoModel *)poiInfo
+{
+    [self.navigationController popToViewController:self animated:YES];
+    YZTBaiduMapHelper *_baidu = [YZTBaiduMapHelper shareMapHelper];
+    
+    [_baidu addOverlayTargetPoint:poiInfo.pt
+                           oPoint:_locParam.location.coordinate];
+    
+    
+    
+    
+    
+    
+    [_baidu mapGetRouteStartPoint:poiInfo.pt
+                         endPoint:_locParam.location.coordinate];
+    
+    
+    
+    
+    
+    
+}
 
 @end

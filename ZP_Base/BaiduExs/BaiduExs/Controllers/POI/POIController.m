@@ -13,6 +13,7 @@
 
 #import "My001TableCell.h"
 
+
 @interface POIController ()<UITableViewDelegate,UITableViewDataSource>
 
 
@@ -31,9 +32,25 @@
     
     [self initData];
     
-    [self createUI];
+    if (self.locModel) {
+        [self createUI_2];
+        [self poiAciton:nil];
+    }
+    else{
+        [self createUI];
+        
+        
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     
 }
+
+
 
 //-(void)viewDidLayoutSubviews
 //{
@@ -94,10 +111,13 @@
     
     
     
-    self.poiTb                  = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    self.poiTb                  = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.poiTb.delegate         = self;
     self.poiTb.dataSource       = self;
     self.poiTb.separatorStyle   = UITableViewCellSeparatorStyleNone;
+    
+    self.poiTb.tableHeaderView = nil;
+    
     [self.view addSubview:self.poiTb];
     
     [_poiTb mas_makeConstraints:^(MASConstraintMaker *make){
@@ -109,10 +129,39 @@
     }];
 }
 
+
+- (void)createUI_2
+{
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    
+    
+    
+    
+    self.poiTb                  = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.poiTb.delegate         = self;
+    self.poiTb.dataSource       = self;
+    self.poiTb.separatorStyle   = UITableViewCellSeparatorStyleNone;
+    
+    self.poiTb.tableHeaderView = nil;
+    
+    [self.view addSubview:self.poiTb];
+    
+    [_poiTb mas_makeConstraints:^(MASConstraintMaker *make){
+        
+        make.left.offset(5);
+        make.top.offset(5);
+        make.right.mas_equalTo(self.view.mas_right).offset(-5);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-5);
+    }];
+}
+
 - (void)locAciton:(UIButton *)target
 {
+    if (target) {
+        target.enabled = NO;
+    }
     
-    target.enabled = NO;
 
     
     
@@ -140,7 +189,11 @@
                   }
                   
                   [_weakSelf.poiTb reloadData];
-                  _weakBtn.enabled = YES;
+                  
+                  if (_weakBtn) {
+                      _weakBtn.enabled = YES;
+                  }
+                  
               }];
              
              
@@ -150,7 +203,11 @@
 
              _weakSelf.poiList = @[];
              [_weakSelf.poiTb reloadData];
-             _weakBtn.enabled = YES;
+             
+             
+             if (_weakBtn) {
+                 _weakBtn.enabled = YES;
+             }
              
          }
  
@@ -225,5 +282,19 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cellClick:)]) {
+        [self.delegate cellClick:self.poiList[indexPath.row]];
+    }
+    
+}
+
+
+
+
 
 @end

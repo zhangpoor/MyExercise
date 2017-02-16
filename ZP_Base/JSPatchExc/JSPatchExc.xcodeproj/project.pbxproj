@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		793668F5D6A7B606333B2AEA /* libPods-JSPatchExc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1098801547C6020D9F45052 /* libPods-JSPatchExc.a */; };
 		E333B3F11C47372700D6DA80 /* JSPHManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E333B3F01C47372700D6DA80 /* JSPHManager.m */; };
 		E333B3F31C4738AE00D6DA80 /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = E333B3F21C4738AE00D6DA80 /* demo.js */; };
 		E33E10581C45F90200BE8949 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E33E10571C45F90200BE8949 /* main.m */; };
@@ -22,10 +21,12 @@
 		E3DF3CDB1C487578007FD47A /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DF3CDA1C487578007FD47A /* MainController.m */; };
 		E3DF3CDD1C4880F5007FD47A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DF3CDC1C4880F5007FD47A /* WebKit.framework */; };
 		E3DF3CDF1C488723007FD47A /* IMG_0004.JPG in Resources */ = {isa = PBXBuildFile; fileRef = E3DF3CDE1C488723007FD47A /* IMG_0004.JPG */; };
+		F5B5D656FE87C539EF712DD7 /* Pods_JSPatchExc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6B8EE97CB9DF849DE5F533 /* Pods_JSPatchExc.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0549A49378280AB81A4F631E /* Pods-JSPatchExc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSPatchExc.release.xcconfig"; path = "../Pods/Target Support Files/Pods-JSPatchExc/Pods-JSPatchExc.release.xcconfig"; sourceTree = "<group>"; };
+		4A6B8EE97CB9DF849DE5F533 /* Pods_JSPatchExc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSPatchExc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E30F52131C4F6A8600BD6827 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		E333B3EF1C47372700D6DA80 /* JSPHManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSPHManager.h; sourceTree = "<group>"; };
 		E333B3F01C47372700D6DA80 /* JSPHManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSPHManager.m; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		E3DF3CDC1C4880F5007FD47A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E3DF3CDE1C488723007FD47A /* IMG_0004.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0004.JPG; sourceTree = "<group>"; };
 		ED6BF8FDA478E857129705A7 /* Pods-JSPatchExc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSPatchExc.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-JSPatchExc/Pods-JSPatchExc.debug.xcconfig"; sourceTree = "<group>"; };
-		F1098801547C6020D9F45052 /* libPods-JSPatchExc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSPatchExc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 				E33E10731C45FE8600BE8949 /* JavaScriptCore.framework in Frameworks */,
 				E33E10711C45FE6800BE8949 /* libz.tbd in Frameworks */,
 				E33E106E1C45F94F00BE8949 /* libZP_Base.a in Frameworks */,
-				793668F5D6A7B606333B2AEA /* libPods-JSPatchExc.a in Frameworks */,
+				F5B5D656FE87C539EF712DD7 /* Pods_JSPatchExc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				E3DF3CDC1C4880F5007FD47A /* WebKit.framework */,
-				F1098801547C6020D9F45052 /* libPods-JSPatchExc.a */,
+				4A6B8EE97CB9DF849DE5F533 /* Pods_JSPatchExc.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -1,0 +1,6 @@
+framework module Pods_ZP_Base {
+  umbrella header "Pods-ZP_Base-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -109,6 +109,10 @@ typedef NS_ENUM(NSInteger, YZTRoutePolicyType)
 
 
 
+
+
+
+
 /**
  百度授权回调
 
@@ -168,6 +172,8 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 - (void)yztBaiduAuthorize:(YZTBaiduAuthorizeCallback)callback;
 
 #pragma mark- <功能类>
+
+#pragma mark $ 定位
 /**
  定位
 
@@ -176,7 +182,7 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 - (void)yztBaiduLocate:(YZTBaiduLocateCallback)callback;
 
 
-
+#pragma mark $ 反地理编码
 /**
  反地理编码
 
@@ -189,7 +195,7 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 
 
 
-
+#pragma mark $ 周边检索
 /**
  周边检索
 
@@ -227,7 +233,7 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 
 
 
-
+#pragma mark $ Map 系列函数
 /**
  获取百度map
 
@@ -243,6 +249,14 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
 - (void)mapMoveToLocation:(CLLocationCoordinate2D)point;
 - (void)mapZoomAction:(CGFloat)dZoomLv;
 
+- (void)addOverlayTargetPoint:(CLLocationCoordinate2D)tPoint
+            oPoint:(CLLocationCoordinate2D)oPoint;
+
+
+
+
+
+#pragma mark $ 路线检索
 /**
  *  公交路线检索
  *
@@ -287,10 +301,11 @@ typedef void (^YZTBaiduNearByCallback)(BOOL isSuccess,YZTBaiduPOIModel *poiParam
                         end:(CLLocationCoordinate2D)endPoint
                        city:(NSString *)city
                 routePolicy:(YZTRoutePolicyType)rpTp
-                   callback:(YZTBaiduRouteSearchCallback)callback;
+                   callback:(void (^)(BOOL isSuccess,NSString *routeSearchErrorMsg))callback;
 
 */
-
+- (void)mapGetRouteStartPoint:(CLLocationCoordinate2D)sp
+                     endPoint:(CLLocationCoordinate2D)ep;
 
 #pragma mark- <工具类>
 

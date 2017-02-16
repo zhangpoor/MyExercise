@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A6F89F3CDE201E462DC4ADF6 /* libPods-BaiduExs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */; };
+		A2FA467DB3F0851220531946 /* Pods_BaiduExs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48852AEDB2E918D03260923C /* Pods_BaiduExs.framework */; };
+		E36212B11E52974A008A1B29 /* MyOverlayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E36212B01E52974A008A1B29 /* MyOverlayView.mm */; };
+		E36212B61E53ED15008A1B29 /* star.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E36212B51E53ED15008A1B29 /* star.jpg */; };
 		E386A6CF1E31F7C500DEDDA3 /* GeoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6CE1E31F7C500DEDDA3 /* GeoController.m */; };
 		E386A6F21E35964D00DEDDA3 /* My001TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6EF1E35964D00DEDDA3 /* My001TableCell.m */; };
 		E386A6F31E35964D00DEDDA3 /* POIController.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6F11E35964D00DEDDA3 /* POIController.m */; };
-		E386A6F71E359A0300DEDDA3 /* YZTBaiduMapMananger.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6F61E359A0300DEDDA3 /* YZTBaiduMapMananger.m */; };
 		E386A6FA1E359B5400DEDDA3 /* MyMapController.m in Sources */ = {isa = PBXBuildFile; fileRef = E386A6F91E359B5400DEDDA3 /* MyMapController.m */; };
 		E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */; };
 		E39365C41E31F1EB00F37B46 /* LocController.m in Sources */ = {isa = PBXBuildFile; fileRef = E39365C31E31F1EB00F37B46 /* LocController.m */; };
@@ -21,20 +22,22 @@
 		E3AC49B21E2E248700AE6CBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B01E2E248700AE6CBF /* Main.storyboard */; };
 		E3AC49B41E2E248700AE6CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B31E2E248700AE6CBF /* Assets.xcassets */; };
 		E3AC49B71E2E248700AE6CBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3AC49B51E2E248700AE6CBF /* LaunchScreen.storyboard */; };
+		E3EB0C401E5439E400FCAF48 /* Tb002V001Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EB0C3F1E5439E400FCAF48 /* Tb002V001Controller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BaiduExs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		48852AEDB2E918D03260923C /* Pods_BaiduExs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaiduExs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A74F387741A05231BB0CE6F0 /* Pods-BaiduExs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.debug.xcconfig"; sourceTree = "<group>"; };
 		BA7A198C552275B8E1C75003 /* Pods-BaiduExs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaiduExs.release.xcconfig"; path = "../Pods/Target Support Files/Pods-BaiduExs/Pods-BaiduExs.release.xcconfig"; sourceTree = "<group>"; };
+		E36212AF1E52974A008A1B29 /* MyOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOverlayView.h; sourceTree = "<group>"; };
+		E36212B01E52974A008A1B29 /* MyOverlayView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyOverlayView.mm; sourceTree = "<group>"; };
+		E36212B51E53ED15008A1B29 /* star.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = star.jpg; sourceTree = "<group>"; };
 		E386A6CD1E31F7C500DEDDA3 /* GeoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoController.h; sourceTree = "<group>"; };
 		E386A6CE1E31F7C500DEDDA3 /* GeoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoController.m; sourceTree = "<group>"; };
 		E386A6EE1E35964D00DEDDA3 /* My001TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = My001TableCell.h; sourceTree = "<group>"; };
 		E386A6EF1E35964D00DEDDA3 /* My001TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = My001TableCell.m; sourceTree = "<group>"; };
 		E386A6F01E35964D00DEDDA3 /* POIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIController.h; sourceTree = "<group>"; };
 		E386A6F11E35964D00DEDDA3 /* POIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIController.m; sourceTree = "<group>"; };
-		E386A6F51E359A0300DEDDA3 /* YZTBaiduMapMananger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTBaiduMapMananger.h; sourceTree = "<group>"; };
-		E386A6F61E359A0300DEDDA3 /* YZTBaiduMapMananger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTBaiduMapMananger.m; sourceTree = "<group>"; };
 		E386A6F81E359B5400DEDDA3 /* MyMapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMapController.h; sourceTree = "<group>"; };
 		E386A6F91E359B5400DEDDA3 /* MyMapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMapController.m; sourceTree = "<group>"; };
 		E39365931E2E2AB700F37B46 /* YZTBaiduMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTBaiduMapHelper.h; sourceTree = "<group>"; };
@@ -51,6 +54,8 @@
 		E3AC49B31E2E248700AE6CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3AC49B61E2E248700AE6CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3AC49B81E2E248700AE6CBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3EB0C3E1E5439E400FCAF48 /* Tb002V001Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tb002V001Controller.h; sourceTree = "<group>"; };
+		E3EB0C3F1E5439E400FCAF48 /* Tb002V001Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tb002V001Controller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6F89F3CDE201E462DC4ADF6 /* libPods-BaiduExs.a in Frameworks */,
+				A2FA467DB3F0851220531946 /* Pods_BaiduExs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,7 +82,7 @@
 		AF801E754A73832C039E1EF6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8789E7151A0FBD10279BFA28 /* libPods-BaiduExs.a */,
+				48852AEDB2E918D03260923C /* Pods_BaiduExs.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,8 +101,11 @@
 		E386A6F41E35969F00DEDDA3 /* RouteMapNav */ = {
 			isa = PBXGroup;
 			children = (
+				E36212B51E53ED15008A1B29 /* star.jpg */,
 				E386A6F81E359B5400DEDDA3 /* MyMapController.h */,
 				E386A6F91E359B5400DEDDA3 /* MyMapController.m */,
+				E36212AF1E52974A008A1B29 /* MyOverlayView.h */,
+				E36212B01E52974A008A1B29 /* MyOverlayView.mm */,
 			);
 			path = RouteMapNav;
 			sourceTree = "<group>";
@@ -107,8 +115,6 @@
 			children = (
 				E39365931E2E2AB700F37B46 /* YZTBaiduMapHelper.h */,
 				E39365941E2E2AB700F37B46 /* YZTBaiduMapHelper.mm */,
-				E386A6F51E359A0300DEDDA3 /* YZTBaiduMapMananger.h */,
-				E386A6F61E359A0300DEDDA3 /* YZTBaiduMapMananger.m */,
 			);
 			path = Baidu;
 			sourceTree = "<group>";
@@ -147,6 +153,7 @@
 		E3AC49A61E2E248700AE6CBF /* BaiduExs */ = {
 			isa = PBXGroup;
 			children = (
+				E3EB0C3D1E5439B800FCAF48 /* tab002 */,
 				E39365921E2E2AB700F37B46 /* Baidu */,
 				E39365B71E30B48E00F37B46 /* Controllers */,
 				E3AC49AA1E2E248700AE6CBF /* AppDelegate.h */,
@@ -168,6 +175,15 @@
 				E3AC49A81E2E248700AE6CBF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E3EB0C3D1E5439B800FCAF48 /* tab002 */ = {
+			isa = PBXGroup;
+			children = (
+				E3EB0C3E1E5439E400FCAF48 /* Tb002V001Controller.h */,
+				E3EB0C3F1E5439E400FCAF48 /* Tb002V001Controller.m */,
+			);
+			path = tab002;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3AC49B71E2E248700AE6CBF /* LaunchScreen.storyboard in Resources */,
+				E36212B61E53ED15008A1B29 /* star.jpg in Resources */,
 				E3AC49B41E2E248700AE6CBF /* Assets.xcassets in Resources */,
 				E3AC49B21E2E248700AE6CBF /* Main.storyboard in Resources */,
 			);
@@ -297,12 +314,13 @@
 				E39365C41E31F1EB00F37B46 /* LocController.m in Sources */,
 				E386A6CF1E31F7C500DEDDA3 /* GeoController.m in Sources */,
 				E386A6FA1E359B5400DEDDA3 /* MyMapController.m in Sources */,
+				E36212B11E52974A008A1B29 /* MyOverlayView.mm in Sources */,
 				E3AC49AF1E2E248700AE6CBF /* ViewController.m in Sources */,
-				E386A6F71E359A0300DEDDA3 /* YZTBaiduMapMananger.m in Sources */,
 				E386A6F21E35964D00DEDDA3 /* My001TableCell.m in Sources */,
 				E3AC49AC1E2E248700AE6CBF /* AppDelegate.m in Sources */,
 				E39365951E2E2AB700F37B46 /* YZTBaiduMapHelper.mm in Sources */,
 				E386A6F31E35964D00DEDDA3 /* POIController.m in Sources */,
+				E3EB0C401E5439E400FCAF48 /* Tb002V001Controller.m in Sources */,
 				E3AC49A91E2E248700AE6CBF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7EA2327519423293BB595EC4 /* libPods-Exc001.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E7C723EF8861A452A68813 /* libPods-Exc001.a */; };
+		2359D02BE9E758D05A7ED97F /* Pods_Exc001.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C8329FC15B36338BF882D3B /* Pods_Exc001.framework */; };
 		E3034A1F1CBE3F7100FEEF3D /* Controller002.m in Sources */ = {isa = PBXBuildFile; fileRef = E3034A1E1CBE3F7100FEEF3D /* Controller002.m */; };
 		E3034A221CBE417900FEEF3D /* Vc002CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3034A211CBE417900FEEF3D /* Vc002CollectionCell.m */; };
 		E3054D521CACBD1800A90576 /* MyPhotosController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3054D511CACBD1800A90576 /* MyPhotosController.m */; };
@@ -30,8 +30,8 @@
 
 /* Begin PBXFileReference section */
 		05D7463F666C01112BCCA628 /* Pods-Exc001.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Exc001.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Exc001/Pods-Exc001.debug.xcconfig"; sourceTree = "<group>"; };
-		25E7C723EF8861A452A68813 /* libPods-Exc001.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Exc001.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CB69231E6AA890030F1AAA /* Pods-Exc001.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Exc001.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Exc001/Pods-Exc001.release.xcconfig"; sourceTree = "<group>"; };
+		5C8329FC15B36338BF882D3B /* Pods_Exc001.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Exc001.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3034A1D1CBE3F7100FEEF3D /* Controller002.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller002.h; sourceTree = "<group>"; };
 		E3034A1E1CBE3F7100FEEF3D /* Controller002.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller002.m; sourceTree = "<group>"; };
 		E3034A201CBE417900FEEF3D /* Vc002CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vc002CollectionCell.h; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 			files = (
 				E326C44B1C7D7AB40022CB11 /* CoreLocation.framework in Frameworks */,
 				E3B06EDB1C2D3A87002CDE9B /* libZP_Base.a in Frameworks */,
-				7EA2327519423293BB595EC4 /* libPods-Exc001.a in Frameworks */,
+				2359D02BE9E758D05A7ED97F /* Pods_Exc001.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +88,7 @@
 				E3B06EDA1C2D3A87002CDE9B /* libZP_Base.a */,
 				E379C5F81C2D21EF00F3BFAE /* libZP_Base.a */,
 				E379C5F61C2D1D5000F3BFAE /* libPods-ZP_Base.a */,
-				25E7C723EF8861A452A68813 /* libPods-Exc001.a */,
+				5C8329FC15B36338BF882D3B /* Pods_Exc001.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

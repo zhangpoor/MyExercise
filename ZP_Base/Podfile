@@ -1,11 +1,19 @@
 workspace 'ZP_Base.xcworkspace'
 
+use_frameworks!
+
 platform :ios, '8.0'
 
 def shared_pods
     pod 'AFNetworking'
     pod 'Masonry'
 end
+
+
+def swift_pods
+    pod 'SnapKit'
+end
+
 
 
 target 'ZP_Base' do
@@ -29,6 +37,15 @@ target 'JSPatchExc' do
     shared_pods
     pod 'JSPatch'
 end
+
+
+
+
+target 'SwiftExs' do
+    project 'SwiftExs/SwiftExs.xcodeproj'
+    swift_pods
+end
+
 
 
 

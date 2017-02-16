@@ -9,13 +9,21 @@
 #import "YZTBaiduMapHelper.h"
 
 //目前定位全部功能依赖
-#import <BaiduMapKit/BaiduMapAPI_Location/BMKLocationComponent.h>
+
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+
+
 //目前反地理编码、 Poi功能（周边查询） 等全部功能依赖
-#import <BaiduMapKit/BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Search/BMKPoiSearch.h>
 
 //线路检索_地图
-#import <BaiduMapKit/BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 
+
+
+#import <BaiduMapAPI_Utils/BMKGeometry.h>
+#import "MyOverlayView.h"
 
 
 //根据不同的bundle id 去 百度开放平台去注册个。。这个对应的是 com.pingan.yztDept
@@ -95,6 +103,24 @@ typedef void (^YZTBaiduPrivateLocateCallback)(BOOL isSuccess,BMKUserLocation *pa
 
 @end
 
+
+
+
+@interface MyOverlay : NSObject<BMKOverlay>
+
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+
+
+@property (nonatomic) BMKMapRect boundingMapRect;
+
+@end
+
+
+@implementation MyOverlay
+
+
+
+@end
 
 @interface YZTBaiduMapHelper ()
 <
@@ -732,6 +758,7 @@ BMKRouteSearchDelegate
 {
     if (_mapView) {
         _mapView.delegate = nil;
+        // [_mapView removeOverlays:_mapView.overlays];
         _mapView = nil;
         
         
@@ -800,6 +827,45 @@ BMKRouteSearchDelegate
     _mapView.zoomLevel          = _lv ;
 }
 
+
+- (void)addOverlayTargetPoint:(CLLocationCoordinate2D)tPoint
+                       oPoint:(CLLocationCoordinate2D)oPoint
+{
+    if (_mapView) {
+        
+        MyOverlay *_overlay = [[MyOverlay alloc]init];
+        
+        _overlay.coordinate = tPoint;
+        
+        BMKMapPoint _p = BMKMapPointForCoordinate(_overlay.coordinate);
+        _overlay.boundingMapRect = {{_p.x,_p.y},{5000,5000}};
+        
+        [self.mapView addOverlay:_overlay];
+        
+        
+     
+        
+        CLLocationCoordinate2D _newCenter = {
+            (oPoint.latitude + tPoint.latitude)/2,
+            (oPoint.longitude + tPoint.longitude)/2
+        };
+        
+        CLLocationDegrees delLat = fabs(( tPoint.latitude -  oPoint.latitude));
+        CLLocationDegrees delLng = fabs(( tPoint.longitude -  oPoint.longitude));
+        
+        CGFloat _factor = 1.1;
+        
+        
+        BMKCoordinateRegion viewRegion = BMKCoordinateRegionMake(_newCenter, BMKCoordinateSpanMake(delLat * _factor,delLng * _factor));
+        BMKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:viewRegion];
+        [self.mapView setRegion:adjustedRegion animated:YES];
+        /*
+         上面最后一行：设置当前地图的经纬度范围，设定的该范围可能会被调整为适合地图窗口显示的范围。region是BMKMapView的一个属性，类型BMKCoordinateRegion ，这行的意思是创建一个以coordinate为中心，上下左右个0.5个经（纬）度。但是这时我们需要注意一个问题就是，创建的区域是一个正方形，并不符合我们所需要的BMKMapView比例；之后用方法regionThatFits调整显示范围。
+         */
+        
+    }
+}
+
 - (void)mapGetRouteStartPoint:(CLLocationCoordinate2D)sp
                      endPoint:(CLLocationCoordinate2D)ep
 {
@@ -816,109 +882,146 @@ BMKRouteSearchDelegate
      }];
 }
 
+
+
 #pragma mark map delegate
-/**
- *地图初始化完毕时会调用此接口
- *@param mapView 地图View
- */
-- (void)mapViewDidFinishLoading:(BMKMapView *)mapView
-{
-    
-}
-
-/**
- *地图渲染完毕后会调用此接口
- *@param mapView 地图View
- */
-- (void)mapViewDidFinishRendering:(BMKMapView *)mapView
-{
-    
-}
-
-/**
- *根据anntation生成对应的View
- *@param mapView 地图View
- *@param annotation 指定的标注
- *@return 生成的标注View
- */
-- (BMKAnnotationView *)mapView:(BMKMapView *)mapView
-             viewForAnnotation:(id <BMKAnnotation>)annotation
-{
-    return nil;
-}
-
-/**
- *当选中一个annotation views时，调用此接口
- *@param mapView 地图View
- *@param view 选中的annotation view
- */
-- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
-{
-    
-}
-
-/**
- *当点击annotation view弹出的泡泡时，调用此接口
- *@param mapView 地图View
- *@param view 泡泡所属的annotation view
- */
-- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
-{
-
-}
-
-
 /**
  *根据overlay生成对应的View
  *@param mapView 地图View
  *@param overlay 指定的overlay
  *@return 生成的覆盖物View
  */
-- (BMKOverlayView *)mapView:(BMKMapView *)mapView viewForOverlay:(id <BMKOverlay>)overlay
+- (BMKOverlayView *)mapView:(BMKMapView *)mapView
+             viewForOverlay:(id<BMKOverlay>)overlay
 {
+    if ([overlay isKindOfClass:[MyOverlay class]]) {
+
+        
+        BMKCircle *_cir = [BMKCircle circleWithCenterCoordinate:overlay.coordinate radius:120];
+
+        MyOverlayView *_v = [[MyOverlayView alloc]initWithOverlay:_cir];
+
+
+        
+        
+        return _v;
+        
+    }
+    else if ([overlay isKindOfClass:[BMKPolyline class]]) {
+        BMKPolylineView *view = [[BMKPolylineView alloc] initWithOverlay:overlay];
+        // 设置属性
+        view.strokeColor =
+        //[[UIColor alloc] initWithRed:1 green:0 blue:1 alpha:1];
+        //view.fillColor =
+        [[UIColor alloc] initWithRed:0.9 green:0.9 blue:0.15 alpha:0.7];
+
+        view.lineWidth = 2;
+        return view;
+    }
     return nil;
 }
 
 /**
+ *双击地图时会回调此接口
+ *@param mapView 地图View
+ *@param coordinate 返回双击处坐标点的经纬度
+ 
+- (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate
+{
+   
+}
+*/
+
+
+/**
+ *地图初始化完毕时会调用此接口
+ *@param mapView 地图View
+
+- (void)mapViewDidFinishLoading:(BMKMapView *)mapView
+{
+    
+}
+ */
+/**
+ *地图渲染完毕后会调用此接口
+ *@param mapView 地图View
+
+- (void)mapViewDidFinishRendering:(BMKMapView *)mapView
+{
+    
+}
+ */
+/**
+ *根据anntation生成对应的View
+ *@param mapView 地图View
+ *@param annotation 指定的标注
+ *@return 生成的标注View
+
+- (BMKAnnotationView *)mapView:(BMKMapView *)mapView
+             viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    return nil;
+}
+ */
+/**
+ *当选中一个annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param view 选中的annotation view
+
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    
+}
+ */
+/**
+ *当点击annotation view弹出的泡泡时，调用此接口
+ *@param mapView 地图View
+ *@param view 泡泡所属的annotation view
+
+- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
+{
+
+}
+ */
+/**
  *点中覆盖物后会回调此接口，目前只支持点中BMKPolylineView时回调
  *@param mapView 地图View
  *@param overlayView 覆盖物view信息
- */
+
 - (void)mapView:(BMKMapView *)mapView onClickedBMKOverlayView:(BMKOverlayView *)overlayView
 {
     
 }
-
+ */
 /**
  *点中底图标注后会回调此接口
  *@param mapView 地图View
  *@param mapPoi 标注点信息
- */
+
 - (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi*)mapPoi
 {
     
 }
-
+ */
 /**
  *长按地图时会回调此接口
  *@param mapView 地图View
  *@param coordinate 返回长按事件坐标点的经纬度
- */
+
 - (void)mapview:(BMKMapView *)mapView onLongClick:(CLLocationCoordinate2D)coordinate
 {
     
 }
-
+ */
 /**
  *地图状态改变完成后会调用此接口
  *@param mapView 地图View
- */
+
 - (void)mapStatusDidChanged:(BMKMapView *)mapView
 {
 
 }
-
-
+ */
 /**
  *地图渲染每一帧画面过程中，以及每次需要重绘地图时（例如添加覆盖物）都会调用此接口
  *@param mapView 地图View
@@ -940,8 +1043,6 @@ BMKRouteSearchDelegate
  
 - (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
 */
-
-
 /**
  *当mapView新添加annotation views时，调用此接口
  *@param mapView 地图View
@@ -949,8 +1050,6 @@ BMKRouteSearchDelegate
 
 - (void)mapView:(BMKMapView *)mapView didAddAnnotationViews:(NSArray *)views;
  */
-
-
 /**
  *当取消选中一个annotation views时，调用此接口
  *@param mapView 地图View
@@ -968,10 +1067,6 @@ BMKRouteSearchDelegate
 - (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
    fromOldState:(BMKAnnotationViewDragState)oldState;
  */
-
-
-
-
 /**
  *当mapView新添加overlay views时，调用此接口
  *@param mapView 地图View
@@ -979,10 +1074,6 @@ BMKRouteSearchDelegate
 
 - (void)mapView:(BMKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews;
  */
-
-
-
-
 /**
  *点中底图空白处会回调此接口
  *@param mapview 地图View
@@ -990,15 +1081,6 @@ BMKRouteSearchDelegate
 
 - (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate;
  */
-/**
- *双击地图时会回调此接口
- *@param mapview 地图View
- *@param coordinate 返回双击处坐标点的经纬度
-
-- (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate;
- */
-
-
 /**
  *3DTouch 按地图时会回调此接口（仅在支持3D Touch，且fouchTouchEnabled属性为YES时，会回调此接口）
  *@param mapview 地图View
@@ -1008,8 +1090,6 @@ BMKRouteSearchDelegate
 
 - (void)mapview:(BMKMapView *)mapView onForceTouch:(CLLocationCoordinate2D)coordinate force:(CGFloat)force maximumPossibleForce:(CGFloat)maximumPossibleForce;
  */
-
-
 /**
  *地图进入/移出室内图会调用此接口
  *@param mapview 地图View
@@ -1022,6 +1102,8 @@ BMKRouteSearchDelegate
 
 
 #pragma mark- <线路检索>
+
+
 - (void)yztBaiduRouteSearch:(YZTRouteType)tp
                       start:(CLLocationCoordinate2D)startPoint
                         end:(CLLocationCoordinate2D)endPoint
