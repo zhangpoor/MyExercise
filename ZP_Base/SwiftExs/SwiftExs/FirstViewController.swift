@@ -83,7 +83,7 @@ class FirstViewController: UIViewController {
         print("_r:\(_r)");
         
         
-        let _r02 = _bList.sort()
+        let _r02 = _bList.sorted()
         {
             print("#0:\($0),#1:\($1)");
             return $0 > $1;
@@ -116,7 +116,7 @@ class FirstViewController: UIViewController {
         
         
         
-        self.performSelector(<#T##aSelector: Selector##Selector#>)
+        //self.performSelector(<#T##aSelector: Selector##Selector#>)
         
     }
     

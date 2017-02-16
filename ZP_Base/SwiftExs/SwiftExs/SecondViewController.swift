@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Snapkit
+import SnapKit
 
 class SecondViewController: UIViewController {
 
