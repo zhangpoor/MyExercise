@@ -15,6 +15,7 @@
 		E3508F4C1D2A45900001900C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3508F4B1D2A45900001900C /* Assets.xcassets */; };
 		E3508F4F1D2A45900001900C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3508F4D1D2A45900001900C /* LaunchScreen.storyboard */; };
 		E350947B1D2CD13B0001900C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350947A1D2CD13B0001900C /* BaseView.swift */; };
+		E391A45B1E56C3C400C432A5 /* ThirdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E391A45A1E56C3C400C432A5 /* ThirdController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		E3508F4E1D2A45900001900C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E3508F501D2A45900001900C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E350947A1D2CD13B0001900C /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		E391A45A1E56C3C400C432A5 /* ThirdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				E3508F4B1D2A45900001900C /* Assets.xcassets */,
 				E3508F4D1D2A45900001900C /* LaunchScreen.storyboard */,
 				E3508F501D2A45900001900C /* Info.plist */,
+				E391A45A1E56C3C400C432A5 /* ThirdController.swift */,
 			);
 			path = SwiftExs;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3508F471D2A45900001900C /* SecondViewController.swift in Sources */,
+				E391A45B1E56C3C400C432A5 /* ThirdController.swift in Sources */,
 				E3508F431D2A45900001900C /* AppDelegate.swift in Sources */,
 				E3508F451D2A45900001900C /* FirstViewController.swift in Sources */,
 				E350947B1D2CD13B0001900C /* BaseView.swift in Sources */,

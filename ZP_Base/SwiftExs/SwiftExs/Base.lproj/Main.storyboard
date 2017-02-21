@@ -49,6 +49,42 @@
             </objects>
             <point key="canvasLocation" x="750" y="-320"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="uSg-qr-og5">
+            <objects>
+                <navigationController id="C6T-4c-v8P" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="FOW-VT-gNf"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Dh-km-3GB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="FKr-1o-z9a" kind="relationship" relationship="rootViewController" id="w6E-rG-mFE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6VV-EP-w8I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="1091"/>
+        </scene>
+        <!--BaiduKit-->
+        <scene sceneID="X6D-CC-hyg">
+            <objects>
+                <viewController id="FKr-1o-z9a" customClass="ThirdController" customModule="SwiftExs" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0GY-Uf-KZl"/>
+                        <viewControllerLayoutGuide type="bottom" id="eVC-pZ-9Ny"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HJK-Tx-EW5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="BaiduKit" id="NhU-yu-x4n"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g7G-MN-4kk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1695" y="1091"/>
+        </scene>
         <!--Second-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
@@ -102,6 +138,7 @@
                     <connections>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
+                        <segue destination="C6T-4c-v8P" kind="relationship" relationship="viewControllers" id="AGI-ir-ovR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>

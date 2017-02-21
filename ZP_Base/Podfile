@@ -12,6 +12,7 @@ end
 
 def swift_pods
     pod 'SnapKit'
+    pod 'BaiduMapKit'
 end
 
 
