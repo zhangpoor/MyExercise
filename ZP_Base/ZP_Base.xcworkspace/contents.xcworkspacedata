@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AnimationTest/AnimationTest.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MyWindowTest/MyWindowTest.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ZP_Control/ZP_Control.xcodeproj">
    </FileRef>
    <FileRef

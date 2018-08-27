@@ -20,6 +20,7 @@ end
 target 'ZP_Base' do
     project 'ZP_Base.xcodeproj'
     shared_pods
+    pod 'OpenUDID','1.0.0'
 end
 
 target 'Exc001' do

@@ -15,11 +15,12 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - BaiduMapKit (3.2)
-  - JSPatch (1.1.2):
-    - JSPatch/Core (= 1.1.2)
-  - JSPatch/Core (1.1.2)
+  - JSPatch (1.1.3):
+    - JSPatch/Core (= 1.1.3)
+  - JSPatch/Core (1.1.3)
   - Masonry (1.0.2)
-  - SnapKit (3.1.2)
+  - OpenUDID (1.0.0)
+  - SnapKit (3.2.0)
 
 DEPENDENCIES:
   - AFNetworking
@@ -27,15 +28,17 @@ DEPENDENCIES:
   - BaiduMapKit (= 3.2)
   - JSPatch
   - Masonry
+  - OpenUDID (= 1.0.0)
   - SnapKit
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   BaiduMapKit: c23aee47be89b2b939a92acfd06627114e897662
-  JSPatch: 741205ebb2e2238c223a436e4c8cf75cf40a345f
+  JSPatch: 02cfed591cb907bbfe80a346666e5a35fc2d349d
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
+  OpenUDID: e7cb6984c7304906ad20f3a36bf087b025896b6b
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: 612c5d71b43b315c85e3c5ce39b49f72c68ef977
+PODFILE CHECKSUM: 9ff5a75b78e618327c4917806a5112074c493096
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
